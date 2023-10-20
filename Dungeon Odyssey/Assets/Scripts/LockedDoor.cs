@@ -49,7 +49,7 @@ public class LockedDoor : MonoBehaviour
 
             if (layerName == LOCKED_DOOR)
             {
-                Debug.Log("WORK?????");
+                
                 interactText.SetActive(true);
                 if (gameInput.Interacting())
                 {

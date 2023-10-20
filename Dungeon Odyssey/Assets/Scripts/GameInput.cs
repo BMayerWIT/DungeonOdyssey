@@ -62,4 +62,16 @@ public class GameInput : MonoBehaviour
         bool interact = playerInputActions.Player.Interact.WasPressedThisFrame();
         return interact;
     }
+
+    public bool GetToggleCamera()
+    {
+        bool toggleCam = playerInputActions.Player.ToggleCamera.WasPressedThisFrame();
+        return toggleCam;
+    }
+
+    public bool DecreaseHealth()
+    {
+        bool shouldDecreaseHealth = playerInputActions.Player.DecreaseHealth.WasPressedThisFrame();
+        return shouldDecreaseHealth;
+    }
 }

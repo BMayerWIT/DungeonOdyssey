@@ -98,6 +98,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""7585e6d4-c367-4e46-8e6e-f48302a24b08"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DecreaseHealth"",
+                    ""type"": ""Button"",
+                    ""id"": ""f1a21864-7036-4900-84e4-74501f9f04c7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -287,6 +305,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""400eec5d-f9ce-4df0-94ec-4a97ecac91a7"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f991ffd-fd0a-49f5-b1c6-1e0a9bfd3fec"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DecreaseHealth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -303,6 +343,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_ToggleCamera = m_Player.FindAction("ToggleCamera", throwIfNotFound: true);
+        m_Player_DecreaseHealth = m_Player.FindAction("DecreaseHealth", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -370,6 +412,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_ToggleCamera;
+    private readonly InputAction m_Player_DecreaseHealth;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -382,6 +426,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @ToggleCamera => m_Wrapper.m_Player_ToggleCamera;
+        public InputAction @DecreaseHealth => m_Wrapper.m_Player_DecreaseHealth;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -415,6 +461,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @ToggleCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleCamera;
+                @ToggleCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleCamera;
+                @ToggleCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleCamera;
+                @DecreaseHealth.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDecreaseHealth;
+                @DecreaseHealth.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDecreaseHealth;
+                @DecreaseHealth.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDecreaseHealth;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -443,6 +495,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @ToggleCamera.started += instance.OnToggleCamera;
+                @ToggleCamera.performed += instance.OnToggleCamera;
+                @ToggleCamera.canceled += instance.OnToggleCamera;
+                @DecreaseHealth.started += instance.OnDecreaseHealth;
+                @DecreaseHealth.performed += instance.OnDecreaseHealth;
+                @DecreaseHealth.canceled += instance.OnDecreaseHealth;
             }
         }
     }
@@ -457,5 +515,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnToggleCamera(InputAction.CallbackContext context);
+        void OnDecreaseHealth(InputAction.CallbackContext context);
     }
 }

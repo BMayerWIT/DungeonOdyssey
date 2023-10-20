@@ -16,10 +16,11 @@ TagManager:
   - 
   - 
   - 
-  - whatIsGround
+  - Player
   - Enemy
   - Interactable
   - LockedDoor
+  - whatIsGround
   - 
   - 
   - 
@@ -36,8 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Glasses
   m_SortingLayers:
   - name: Default
     uniqueID: 0

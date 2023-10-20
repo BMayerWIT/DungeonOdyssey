@@ -62,7 +62,7 @@ public class InteractableLever : MonoBehaviour
                 if (gameInput.Interacting())
                 {
                     LeverFlick();
-                    Debug.Log("BRuh?");
+                    
                 }
             }
             else

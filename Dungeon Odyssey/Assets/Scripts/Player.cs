@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : MonoBehaviour
 {
@@ -9,13 +11,22 @@ public class Player : MonoBehaviour
     [Header("Objects")]
     [SerializeField] private GameInput gameInput;
     [SerializeField] private Transform orientation;
-    [SerializeField] private Camera playerCamera;
+    [SerializeField] private Camera firstPersonCamera;
+    [SerializeField] private Camera thirdPersonCamera;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float sprintSpeed = 1.5f;
     [SerializeField] private float gravity = 9.8f;
     [SerializeField] private float jumpForce;
+
+    [Header("Statistics")]
+    public static float health = 50f;
+    public static float score = 0f;
+    //TEMPORARY (MAKE ENTIRE HANDLER FOR THESE SYSTEMS
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+
 
     private Vector2 inputVector;
     private Vector3 moveDirection;
@@ -26,7 +37,7 @@ public class Player : MonoBehaviour
     private float standingHeight;
     private bool isGrounded;
     private bool isWalking = false;
-    private bool isRunning = false;
+    private bool isFirstPerson = true;
 
     [Header("Interacting")]
     [SerializeField] private float interactDistance;
@@ -37,6 +48,9 @@ public class Player : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         standingHeight = characterController.height;
+
+        thirdPersonCamera.enabled = false;
+        healthText.SetText("Health: " + health);
     }
 
     private void Update()
@@ -52,6 +66,9 @@ public class Player : MonoBehaviour
         Crouch();
         IsWalking();
         GroundChecking();
+        HandleCameras();
+        DecreaseHealth();
+        scoreText.SetText("Score: " + score);
     }
 
     private void FixedUpdate()
@@ -111,14 +128,24 @@ public class Player : MonoBehaviour
 
     public RaycastHit InteractableCheck()
     {
-        Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, interactDistance);
-        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward, Color.red);
+        Physics.Raycast(firstPersonCamera.transform.position, firstPersonCamera.transform.forward, out RaycastHit hit, interactDistance);
+        Debug.DrawRay(firstPersonCamera.transform.position, firstPersonCamera.transform.forward, Color.red);
         return hit;
     }
 
     public bool IsWalking()
     {
         return isWalking;
+    }
+
+    private void HandleCameras()
+    {
+        if (gameInput.GetToggleCamera())
+        {
+            isFirstPerson = !isFirstPerson;
+            firstPersonCamera.enabled = isFirstPerson;
+            thirdPersonCamera.enabled = !isFirstPerson;
+        }
     }
 
     // Ground Checking
@@ -136,6 +163,19 @@ public class Player : MonoBehaviour
         if (characterController.isGrounded && yVelocity.y < 0)
         {
             yVelocity.y = -2f;
+        }
+    }
+
+
+
+
+
+    private void DecreaseHealth()
+    {
+        if (gameInput.DecreaseHealth())
+        { 
+            health -= 5;
+            healthText.SetText("Health: " + health);
         }
     }
 }

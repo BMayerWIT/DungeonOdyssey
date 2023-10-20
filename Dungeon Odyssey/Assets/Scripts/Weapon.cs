@@ -34,7 +34,7 @@ public class Weapon : MonoBehaviour
         attackSpeed = weapon.attackSpeed;
         attackDelay = weapon.attackDelay;
         cameraOffsetPosition = weapon.cameraOffsetPosition;
-        attackLayer = weapon.attackLayer
+        attackLayer = weapon.attackLayer;
     }
 
     private void Update()
