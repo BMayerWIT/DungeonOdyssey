@@ -21,6 +21,9 @@ TagManager:
   - Interactable
   - LockedDoor
   - whatIsGround
+  - Weapon
+  - Arms
+  - Character
   - 
   - 
   - 
@@ -35,9 +38,6 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - Glasses
   m_SortingLayers:
   - name: Default
     uniqueID: 0

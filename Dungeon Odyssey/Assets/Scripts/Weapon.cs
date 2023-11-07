@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] private WeaponData weapon;
+    //[SerializeField] private WeaponData weapon;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private Camera cam;
 
@@ -28,21 +28,18 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         
-        weaponName = weapon.weaponName;
-        attackDistance = weapon.attackDistance;
-        attackDamage = weapon.attackDamage;
-        attackSpeed = weapon.attackSpeed;
-        attackDelay = weapon.attackDelay;
-        cameraOffsetPosition = weapon.cameraOffsetPosition;
-        attackLayer = weapon.attackLayer;
+        //weaponName = weapon.weaponName;
+       // attackDistance = weapon.attackDistance;
+       // attackDamage = weapon.attackDamage;
+       // attackSpeed = weapon.attackSpeed;
+      //  attackDelay = weapon.attackDelay;
+      //  cameraOffsetPosition = weapon.cameraOffsetPosition;
+      //  attackLayer = weapon.attackLayer;
     }
 
     private void Update()
     {
-        if (gameInput.Attacking()) 
-        {
-            Attack();
-        }
+        
     }
 
     private void Attack()
