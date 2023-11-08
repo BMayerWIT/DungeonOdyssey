@@ -6,13 +6,13 @@ using UnityEngine;
 public class GameInput : MonoBehaviour
 {
     public static GameInput gameInput;
-    private PlayerInputActions playerInputActions;
+    public PlayerInputActions playerInputActions;
     private PlayerAttackHandler playerAttackHandler;
     private PlayerInventory inventory;
 
     public bool dashFlag = false;
     public bool isInteracting;
-
+    
     public bool lightattack_Input;
     public bool heavyattack_Input;
 
@@ -24,7 +24,7 @@ public class GameInput : MonoBehaviour
 
     private void OnEnable()
     {
-        playerInputActions = new PlayerInputActions();
+        
         playerInputActions.Player.Enable();
         
     }

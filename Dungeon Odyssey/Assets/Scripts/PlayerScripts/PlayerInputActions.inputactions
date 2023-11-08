@@ -367,6 +367,12 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Menu",
+            "id": "c94cc067-7785-420d-912e-df2120c1c0f9",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []
