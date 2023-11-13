@@ -56,8 +56,8 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void Update()
     {
-        mouseX = gameInput.GetMouseX();
-        mouseY = gameInput.GetMouseY();
+        mouseX = gameInput.GetMouseMovement().x;
+        mouseY = gameInput.GetMouseMovement().y;
         if (isFirstPerson) 
         {
             yRotation += mouseX * FPsensitivity;

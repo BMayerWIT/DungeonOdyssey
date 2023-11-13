@@ -47,6 +47,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         HUD.SetActive(false);
+        
     }
 
     public void LoadTutorial()

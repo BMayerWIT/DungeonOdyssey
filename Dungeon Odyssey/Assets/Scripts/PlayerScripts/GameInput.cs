@@ -2,13 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
-    public static GameInput gameInput;
-    public PlayerInputActions playerInputActions;
+    public static GameInput inputInstance;
+    
     private PlayerAttackHandler playerAttackHandler;
     private PlayerInventory inventory;
+
+    private PlayerInput _inputActions;
+    private InputAction _movement;
+    private InputAction _mouse;
+    private InputAction _jump;
+    private InputAction _crouch;
+    private InputAction _lightAttack;
+    private InputAction _heavyAttack;
+    private InputAction _interact;
+    private InputAction _dash;
+    private InputAction _toggleCamera;
+    private InputAction _decreaseHealth;
+    private InputAction _pause;
+    private InputAction _sprint;
+
 
     public bool dashFlag = false;
     public bool isInteracting;
@@ -18,15 +34,32 @@ public class GameInput : MonoBehaviour
 
     private void Awake()
     {
+        if (inputInstance == null)
+        {
+            inputInstance = this;
+        }
         playerAttackHandler = GameObject.Find("Player").GetComponent<PlayerAttackHandler>();
         inventory = GameObject.Find("Player").GetComponent<PlayerInventory>();
+        _inputActions = GetComponent<PlayerInput>();
+
+        SetUpInputActions();
     }
 
-    private void OnEnable()
+    private void SetUpInputActions()
     {
-        
-        playerInputActions.Player.Enable();
-        
+        _movement = _inputActions.actions["Movement"];
+        _mouse = _inputActions.actions["Camera"];
+        _jump = _inputActions.actions["Jump"];
+        _crouch = _inputActions.actions["Crouch"];
+        _lightAttack = _inputActions.actions["lightAttack"];
+        _heavyAttack = _inputActions.actions["heavyAttack"];
+        _interact = _inputActions.actions["Interact"];
+        _dash= _inputActions.actions["Dash"];
+        _toggleCamera = _inputActions.actions["ToggleCamera"];
+        _decreaseHealth = _inputActions.actions["DecreaseHealth"];
+        _pause = _inputActions.actions["Pause"];
+        _sprint = _inputActions.actions["Sprint"];
+
     }
 
     public void TickInput(float delta)
@@ -35,84 +68,81 @@ public class GameInput : MonoBehaviour
     }
     public Vector2 GetMovementVectorNormalized()
     {
-        Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = _movement.ReadValue<Vector2>();
 
         inputVector = inputVector.normalized;
 
         return inputVector;
     }
 
-    public float GetMouseX()
-    {
-        float mouseX = playerInputActions.Player.MouseX.ReadValue<float>() * Time.deltaTime;
-        return mouseX;
-    }
+    //public float GetMouseX()
+    //{
+    //    float mouseX = playerInputActions.Player.MouseX.ReadValue<float>() * Time.deltaTime;
+    //    return mouseX;
+    //}
 
-    public float GetMouseY()
-    {
-        float mouseY = playerInputActions.Player.MouseY.ReadValue<float>() * Time.deltaTime;
-        return mouseY;
-    }
+    //public float GetMouseY()
+    //{
+    //    float mouseY = playerInputActions.Player.MouseY.ReadValue<float>() * Time.deltaTime;
+    //    return mouseY;
+    //}
 
     public bool Jumped()
     {
-        bool Jumped = playerInputActions.Player.Jump.WasPressedThisFrame();
+        bool Jumped = _jump.WasPressedThisFrame();
         return Jumped;
     }
 
     public bool IsSprinting()
     {
-        bool sprinting = playerInputActions.Player.Sprint.IsPressed();
+        bool sprinting = _sprint.IsPressed();
         return sprinting;
     }
 
     public bool IsCrouching()
     {
-        bool crouching = playerInputActions.Player.Crouch.IsPressed();
+        bool crouching = _crouch.IsPressed();
         return crouching;
     }
 
     public bool Interacting()
     {
-        bool interact = playerInputActions.Player.Interact.WasPressedThisFrame();
+        bool interact = _interact.WasPressedThisFrame();
         return interact;
     }
 
     public bool GetToggleCamera()
     {
-        bool toggleCam = playerInputActions.Player.ToggleCamera.WasPressedThisFrame();
+        bool toggleCam = _toggleCamera.WasPressedThisFrame();
         return toggleCam;
     }
 
     public bool DecreaseHealth()
     {
-        bool shouldDecreaseHealth = playerInputActions.Player.DecreaseHealth.WasPressedThisFrame();
+        bool shouldDecreaseHealth = _decreaseHealth.WasPressedThisFrame();
         return shouldDecreaseHealth;
     }
 
     public Vector2 GetMouseMovement()
     {
-        Vector2 mouseVector = playerInputActions.Player.Camera.ReadValue<Vector2>();
+        Vector2 mouseVector = _mouse.ReadValue<Vector2>();
         return mouseVector;
     }
 
     public bool HandleDashInput()
     {
         
-        bool dashInput = playerInputActions.Player.Dash.WasPressedThisFrame();
+        bool dashInput = _dash.WasPressedThisFrame();
         dashFlag = true;
         return dashInput;
     }
 
-    private void OnDisable()
-    {
-        playerInputActions.Disable();
-    }
+   
 
     private void HandleAttackInput(float delta)
     {
-        playerInputActions.Player.LightAttack.performed += i => lightattack_Input = true;
-        playerInputActions.Player.HeavyAttack.performed += i => heavyattack_Input = true;
+        _lightAttack.performed += i => lightattack_Input = true;
+        _heavyAttack.performed += i => heavyattack_Input = true;
 
         if (lightattack_Input)
         {
