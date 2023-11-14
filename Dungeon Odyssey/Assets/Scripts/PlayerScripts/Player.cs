@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
 {
 
     [Header("Objects")]
-    [SerializeField] private GameInput gameInput;
     public Transform orientation;
     [SerializeField] private Camera firstPersonCamera;
     [SerializeField] private Camera thirdPersonCamera;
@@ -70,15 +69,15 @@ public class Player : MonoBehaviour
     private void Update()
     {
         float delta = Time.deltaTime;
-        gameInput.TickInput(delta);
+        GameInput.inputInstance.TickInput(delta);
 
         // Set Vector based on inputs
-        inputVector = gameInput.GetMovementVectorNormalized();
+        inputVector = GameInput.inputInstance.GetMovementVectorNormalized();
         Vector3 movementVector = new Vector3(inputVector.x, 0f, inputVector.y);
         isWalking = movementVector != Vector3.zero;
 
         // Handle Movement mechanics and Ground checks
-        if (gameInput.Jumped() && isGrounded)
+        if (GameInput.inputInstance.Jumped() && isGrounded)
             Jump();
         Crouch();
         IsWalking();
@@ -102,7 +101,7 @@ public class Player : MonoBehaviour
         moveDirection = orientation.forward * inputVector.y + orientation.right * inputVector.x;
 
         // Determine if the player is sprinting
-        bool isSprinting = isGrounded && gameInput.IsSprinting() && !gameInput.IsCrouching();
+        bool isSprinting = isGrounded && GameInput.inputInstance.IsSprinting() && !GameInput.inputInstance.IsCrouching();
 
         // Calculate the horizontal speed based on sprinting state
         float targetSpeed = GetHorizontalSpeed(moveDirection, isSprinting);
@@ -132,7 +131,7 @@ public class Player : MonoBehaviour
         { return; }
 
 
-        if (!gameInput.dashFlag && gameInput.HandleDashInput())
+        if (!GameInput.inputInstance.dashFlag && GameInput.inputInstance.HandleDashInput())
         {
             Debug.Log("Animation should play");
             
@@ -148,7 +147,7 @@ public class Player : MonoBehaviour
 
     private void Crouch()
     {
-        if (gameInput.IsCrouching())
+        if (GameInput.inputInstance.IsCrouching())
         {
             // Half height
             characterController.height = standingHeight / 2; 
@@ -216,7 +215,7 @@ public class Player : MonoBehaviour
     }
     private void DecreaseHealth()
     {
-        if (gameInput.DecreaseHealth())
+        if (GameInput.inputInstance.DecreaseHealth())
         { 
             health -= 5;
             healthText.SetText("Health: " + health);

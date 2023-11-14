@@ -10,21 +10,21 @@ public class PlayerManager : MonoBehaviour
     Animator animator;
     void Start()
     {
-        gameInput = GameObject.Find("GameInput").GetComponent<GameInput>();
+        
         animator = GetComponentInChildren<Animator>();
     }
 
     
     void Update()
     {
-        gameInput.isInteracting = animator.GetBool("isInteracting");
-        gameInput.dashFlag = false;
+        GameInput.inputInstance.isInteracting = animator.GetBool("isInteracting");
+        GameInput.inputInstance.dashFlag = false;
         
     }
 
     private void LateUpdate()
     {
-        gameInput.lightattack_Input = false;
-        gameInput.heavyattack_Input = false;
+        GameInput.inputInstance.lightattack_Input = false;
+        GameInput.inputInstance.heavyattack_Input = false;
     }
 }

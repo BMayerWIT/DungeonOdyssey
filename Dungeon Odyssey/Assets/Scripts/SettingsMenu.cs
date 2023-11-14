@@ -10,6 +10,12 @@ public class SettingsMenu : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            Debug.Log(PlayerPrefs.GetFloat("firstPersonSensitivity"));
+            Debug.Log(PlayerPrefs.GetFloat("thirdPersonSensitivity"));
+
+        }
         fpSensSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("firstPersonSensitivity"));
         tpSensSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("thirdPersonSensitivity"));
     }

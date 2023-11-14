@@ -9,8 +9,6 @@ public class LockedDoor : MonoBehaviour
     private const string LOCKED_DOOR = "LockedDoor";
     private GameObject doorLockedText;
     private GameObject interactText;
-    private GameInput gameInput;
-    private GameObject gameInputObject;
     private GameObject playerObject;
     private Player player;
     private GameObject interactCanvas;
@@ -27,9 +25,6 @@ public class LockedDoor : MonoBehaviour
         
         playerObject = GameObject.Find("Player");
         player = playerObject.GetComponent<Player>();
-
-        gameInputObject = GameObject.Find("GameInput");
-        gameInput = gameInputObject.GetComponent<GameInput>();
 
     }
 
@@ -51,7 +46,7 @@ public class LockedDoor : MonoBehaviour
             {
                 
                 interactText.SetActive(true);
-                if (gameInput.Interacting())
+                if (GameInput.inputInstance.Interacting())
                 {
                     doorLockedText.SetActive(true);
                     Invoke(nameof(DoorIsLocked), 5);

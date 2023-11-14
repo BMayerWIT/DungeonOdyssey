@@ -6,17 +6,23 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool isPaused = false;
-    public GameObject pauseMenuUI;
     public GameObject HUD;
 
+    [Header("Menus which must be hidden after game is unpaused")]
+
+    [SerializeField] private GameObject[] menuList;
+    
     private void Awake()
     {
-        pauseMenuUI.SetActive(false);
+        for (int i = 0; i < menuList.Length; i ++)
+        {
+            menuList[i].SetActive(false);
+        }
     }
-    // Update is called once per frame
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (GameInput.inputInstance.ReturnPauseState())
         {
             if (isPaused)
             {
@@ -31,7 +37,10 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        pauseMenuUI.SetActive(false);
+        for (int i = 0; i < menuList.Length; i++)
+        {
+            menuList[i].SetActive(false);
+        }
         Time.timeScale = 1f;
         isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -41,7 +50,7 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        pauseMenuUI.SetActive(true);
+        menuList[0].SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
         Cursor.lockState = CursorLockMode.None;
@@ -59,6 +68,17 @@ public class PauseMenu : MonoBehaviour
         Resume();
     }
 
+    public void ReturnToMenu()
+    {
+        Resume();
+        StatsHandler.SaveData();
+        StatsHandler.LoadData();
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("Menu");
+
+    }
     public void QuitGame()
     {
         Application.Quit();

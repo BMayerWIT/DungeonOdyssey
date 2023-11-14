@@ -7,14 +7,14 @@ public class PlayerAnimationHandler : MonoBehaviour
 {
     private Animator animator;
     private AnimatorStateInfo animStateInfo;
-    private GameInput gameInput;
+    
     private Player player;
 
     public void Start()
     {
         animator = GetComponentInChildren<Animator>();
         
-        gameInput = GameObject.Find("GameInput").GetComponent<GameInput>();
+       
         player = GetComponent<Player>();
     }
 

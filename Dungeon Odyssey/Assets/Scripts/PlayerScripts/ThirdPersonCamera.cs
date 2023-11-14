@@ -8,9 +8,6 @@ using UnityEngine.UIElements;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-    private Object gameInputObject;
-    private GameInput gameInput;
-
     [SerializeField] private Transform orientation;
     private float FPsensitivity;
     private float TPsensitivity;
@@ -40,13 +37,8 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void Start()
     {
-        FPsensitivity = PlayerPrefs.GetFloat("firstPersonSensitivity");
-        TPsensitivity = PlayerPrefs.GetFloat("thirdPersonSensitivity");
-
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
-        gameInputObject = GameObject.Find("GameInput");
-        gameInput = gameInputObject.GetComponent<GameInput>();
 
         fPCamera.enabled = false;
         tPCamera.enabled = true;
@@ -56,15 +48,19 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void Update()
     {
-        mouseX = gameInput.GetMouseMovement().x;
-        mouseY = gameInput.GetMouseMovement().y;
+        mouseX = GameInput.inputInstance.GetMouseX();
+        mouseY = GameInput.inputInstance.GetMouseY();
+        
+        
         if (isFirstPerson) 
         {
+            FPsensitivity = PlayerPrefs.GetFloat("firstPersonSensitivity");
             yRotation += mouseX * FPsensitivity;
             xRotation -= mouseY * FPsensitivity;
         }
         else
         {
+            TPsensitivity = PlayerPrefs.GetFloat("thirdPersonSensitivity");
             yRotation += mouseX * TPsensitivity;
             xRotation -= mouseY * TPsensitivity;
         }
@@ -110,7 +106,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void HandleCameraState()
     {
-        if (gameInput.GetToggleCamera())
+        if (GameInput.inputInstance.GetToggleCamera())
         {
             isFirstPerson = !isFirstPerson;
 

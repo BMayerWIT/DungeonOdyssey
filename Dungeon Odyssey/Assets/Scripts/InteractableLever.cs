@@ -7,9 +7,7 @@ public class InteractableLever : MonoBehaviour
 {
     [SerializeField] private GameObject objectToUpdate;
     [SerializeField] private bool isUnlocked;
-    private GameObject gameInputObject;
-    private GameInput gameInput;
-  
+    
 
     private Animator animator;
     private Animator doorAnimator;
@@ -35,10 +33,6 @@ public class InteractableLever : MonoBehaviour
         textHandler = interactCanvas.GetComponent<TextHandlers>();
         interactText = textHandler.GetFText();
 
-        gameInputObject = GameObject.Find("GameInput");
-        gameInput = gameInputObject.GetComponent<GameInput>();
-
-
         animator = GetComponent<Animator>();
         doorAnimator = objectToUpdate.GetComponent<Animator>();
     }
@@ -59,7 +53,7 @@ public class InteractableLever : MonoBehaviour
             if (layerName == LEVER)
             {
                 interactText.SetActive(true);
-                if (gameInput.Interacting())
+                if (GameInput.inputInstance.Interacting())
                 {
                     LeverFlick();
                     
