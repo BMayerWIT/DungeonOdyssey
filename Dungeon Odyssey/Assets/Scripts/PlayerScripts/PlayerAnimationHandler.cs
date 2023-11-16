@@ -50,10 +50,10 @@ public class PlayerAnimationHandler : MonoBehaviour
             Vector3 deltaEuler = deltaRotation.eulerAngles;
 
             // Apply the delta position to the character controller
-            player.characterController.Move(deltaPosition / delta);
+            //player.characterController.Move(deltaPosition / delta);
 
             // Apply the delta rotation to the character's orientation
-            player.orientation.Rotate(deltaEuler);
+            //player.orientation.Rotate(deltaEuler);
         }
     }
 }

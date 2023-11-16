@@ -17,7 +17,7 @@ public class ThirdPersonCamera : MonoBehaviour
  
 
     [SerializeField] private Camera fPCamera;
-    [SerializeField] private Camera tPCamera;
+    //[SerializeField] private Camera tPCamera;
    
 
     [SerializeField] private float minYAngle = 20f;
@@ -40,9 +40,9 @@ public class ThirdPersonCamera : MonoBehaviour
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
 
-        fPCamera.enabled = false;
-        tPCamera.enabled = true;
-        offset = tPCamera.transform.position - orientation.position;
+        fPCamera.enabled = true;
+        //tPCamera.enabled = false;
+        //offset = tPCamera.transform.position - orientation.position;
 
     }
 
@@ -64,55 +64,54 @@ public class ThirdPersonCamera : MonoBehaviour
             yRotation += mouseX * TPsensitivity;
             xRotation -= mouseY * TPsensitivity;
         }
-        HandleCameraState();
+        //HandleCameraState();
 
         
     }
 
     private void FixedUpdate()
     {
-        HandleTPCameraRotation();
-        FollowPlayer();
+        //HandleTPCameraRotation();
+        //FollowPlayer();
         HandleFPCamera();
     }
 
-    private void FollowPlayer()
-    {
-        Vector3 targetPosition = orientation.position + orientation.up * offset.y - orientation.forward * distance;
-        tPCamera.transform.position = Vector3.Lerp(tPCamera.transform.position, targetPosition, rotationSmoothness * Time.deltaTime);
-    }
+    //private void FollowPlayer()
+    //{
+    //    Vector3 targetPosition = orientation.position + orientation.up * offset.y - orientation.forward * distance;
+    //    tPCamera.transform.position = Vector3.Lerp(tPCamera.transform.position, targetPosition, rotationSmoothness * Time.deltaTime);
+    //}
 
-    public void HandleTPCameraRotation()
-    {
-        if (!isFirstPerson)
-        {
-            xRotation = Mathf.Clamp(xRotation, -maxYAngle, -minYAngle);
-        }
+    //public void HandleTPCameraRotation()
+    //{
+    //    if (!isFirstPerson)
+    //    {
+    //        xRotation = Mathf.Clamp(xRotation, -maxYAngle, -minYAngle);
+    //    }
         
-        Quaternion targetRotation = Quaternion.Euler(xRotation, yRotation, 0);
-        tPCamera.transform.rotation = Quaternion.Slerp(tPCamera.transform.rotation, targetRotation, rotationSmoothness * Time.deltaTime);
-    }
+    //    Quaternion targetRotation = Quaternion.Euler(xRotation, yRotation, 0);
+    //    tPCamera.transform.rotation = Quaternion.Slerp(tPCamera.transform.rotation, targetRotation, rotationSmoothness * Time.deltaTime);
+    //}
 
     private void HandleFPCamera()
     {
-        if (isFirstPerson)
-        {
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        }
+        
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        
         
         fPCamera.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation , 0);
     }
 
-    private void HandleCameraState()
-    {
-        if (GameInput.inputInstance.GetToggleCamera())
-        {
-            isFirstPerson = !isFirstPerson;
+    //private void HandleCameraState()
+    //{
+    //    if (GameInput.inputInstance.GetToggleCamera())
+    //    {
+    //        isFirstPerson = !isFirstPerson;
 
-            fPCamera.enabled = isFirstPerson;
-            tPCamera.enabled = !isFirstPerson;
-        }
-    }
+    //        fPCamera.SetActive(isFirstPerson);
+    //        tPCamera.enabled = !isFirstPerson;
+    //    }
+    //}
 
 }
