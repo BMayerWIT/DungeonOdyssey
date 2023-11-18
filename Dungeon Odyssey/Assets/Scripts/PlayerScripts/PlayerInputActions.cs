@@ -152,6 +152,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Block/Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""20ea5b4e-3f59-4207-852e-66bdbdae5674"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -389,7 +398,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f34faf35-cdbc-4eb9-ad5e-11e38690dc7d"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/equals"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -405,6 +414,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1bd6bf81-6594-418f-8155-6878b40c0d8d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block/Parry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -429,6 +449,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_BlockParry = m_Player.FindAction("Block/Parry", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -502,6 +523,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_BlockParry;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -520,6 +542,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @BlockParry => m_Wrapper.m_Player_BlockParry;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -571,6 +594,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @BlockParry.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlockParry;
+                @BlockParry.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlockParry;
+                @BlockParry.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlockParry;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -617,6 +643,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @BlockParry.started += instance.OnBlockParry;
+                @BlockParry.performed += instance.OnBlockParry;
+                @BlockParry.canceled += instance.OnBlockParry;
             }
         }
     }
@@ -637,5 +666,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnBlockParry(InputAction.CallbackContext context);
     }
 }

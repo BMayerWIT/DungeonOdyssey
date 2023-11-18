@@ -5,41 +5,62 @@ using UnityEngine;
 public class PlayerAttackHandler : MonoBehaviour
 {
     PlayerAnimationHandler animationHandler;
-    private PlayerAttackHandler playerAttackHandler;
+    public string lastAttack;
+    
     private PlayerInventory inventory;
 
     private void Awake()
     {
-        animationHandler = GetComponent<PlayerAnimationHandler>();
-        playerAttackHandler = GameObject.Find("Player").GetComponent<PlayerAttackHandler>();
+        animationHandler = GetComponentInChildren<PlayerAnimationHandler>();
+        
         inventory = GameObject.Find("Player").GetComponent<PlayerInventory>();
+        
     }
 
     private void Update()
     {
-        HandleAttacks();
+        //HandleAttacks();
+       // LightAttack();
+    }
+
+    public void HandleWeaponCombo(WeaponItem weapon)
+    {
+        if (GameInput.inputInstance.comboFlag)
+        {
+            animationHandler.animator.SetBool("canDoCombo", false);
+            if (lastAttack == weapon.ArmAttackOHRight1)
+            {
+                animationHandler.PlayTargetAnimation(weapon.ArmAttackOHRight2, true);
+                lastAttack = weapon.ArmAttackOHRight2;
+            }
+            else if (lastAttack == weapon.ArmAttackOHRight2)
+            {
+                animationHandler.PlayTargetAnimation(weapon.ArmAttackOHRight3, true);
+            }
+        }
     }
 
     public void HandleLightAttack(WeaponItem weapon)
     {
-        animationHandler.PlayTargetAnimation(weapon.OH_Light_Attack_1, true);
+
+        if (!GameInput.inputInstance.isLightAttackingRH)
+        { 
+            animationHandler.PlayTargetAnimation(weapon.ArmAttackOHRight1, true);
+            lastAttack = weapon.ArmAttackOHRight1; 
+        }
     }
 
-    public void HandleHeavyAttack(WeaponItem weapon) 
-    { 
-        animationHandler.PlayTargetAnimation(weapon.OH_Heavy_Attack_1 , true);
-    }
+    
 
     private void HandleAttacks()
     {
         if (GameInput.inputInstance.lightattack_Input)
         {
-            playerAttackHandler.HandleLightAttack(inventory.currentWeapon);
+            HandleLightAttack(inventory.currentWeapon);
         }
-        if (GameInput.inputInstance.heavyattack_Input)
-        {
-            playerAttackHandler.HandleHeavyAttack(inventory.currentWeapon);
-        }
+       
     }
+
+    
 }
 

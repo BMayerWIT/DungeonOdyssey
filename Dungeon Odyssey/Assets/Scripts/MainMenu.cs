@@ -8,8 +8,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene("Tutorial");
-        StatsHandler.SaveData();
-        StatsHandler.LoadData();
+       
         Time.timeScale = 1f;
     }
 

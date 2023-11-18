@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - whatIsGround
+  - Hittable
+  - Enemy
   layers:
   - Default
   - TransparentFX

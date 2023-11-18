@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
+
+    private PlayerManager playerManager;
+    private GameObject playerObject;
+    private PlayerAttackHandler playerAttackHandler;
     public static GameInput inputInstance;
 
     private PlayerInput _inputActions;
@@ -36,7 +40,10 @@ public class GameInput : MonoBehaviour
     Vector2 mouseVector;
 
     public bool dashFlag = false;
+    public bool comboFlag;
     public bool isInteracting;
+
+    public bool isLightAttackingRH;
 
     public bool lightattack_Input;
     public bool heavyattack_Input;
@@ -49,6 +56,9 @@ public class GameInput : MonoBehaviour
         }
 
         _inputActions = GetComponent<PlayerInput>();
+        playerObject = GameObject.Find("Player");
+        playerManager = playerObject.GetComponent<PlayerManager>();
+        playerAttackHandler = playerObject.GetComponent<PlayerAttackHandler>();
 
         SetUpInputActions();
     }
@@ -85,15 +95,17 @@ public class GameInput : MonoBehaviour
         toggleCam = _toggleCamera.WasPressedThisFrame();
         shouldDecreaseHealth = _decreaseHealth.WasPressedThisFrame();
         dashInput = _dash.WasPressedThisFrame();
-        _lightAttack.performed += i => lightattack_Input = true;
-        _heavyAttack.performed += i => heavyattack_Input = true;
+        lightattack_Input = _lightAttack.WasPressedThisFrame();
+        
+        
         mouseVector = _mouse.ReadValue<Vector2>();
         pauseState = _pause.WasPressedThisFrame();
+        LightAttack();
         
     }
     public void TickInput(float delta)
     {
-        HandleAttackInput(delta);
+        //HandleAttackInput(delta);
     }
     public Vector2 GetMovementVectorNormalized()
     {
@@ -163,10 +175,33 @@ public class GameInput : MonoBehaviour
         return dashInput;
     }
 
-
-
-    private void HandleAttackInput(float delta)
+    public void LightAttack()
     {
-        
+
+        if (lightattack_Input)
+        {
+            
+            if (playerManager.canDoCombo)
+            {
+                
+                comboFlag = true;
+                playerAttackHandler.HandleWeaponCombo(PlayerInventory.Instance.currentWeapon);
+                comboFlag = false;
+            }
+            else
+            {
+                if (playerManager.canDoCombo)
+                {
+                    return;
+                }
+                
+                
+                playerAttackHandler.HandleLightAttack(PlayerInventory.Instance.currentWeapon);
+                
+            }
+        }
     }
+
+    
+
 }

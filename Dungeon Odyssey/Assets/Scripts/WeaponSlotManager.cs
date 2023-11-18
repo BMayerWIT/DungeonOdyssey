@@ -8,6 +8,8 @@ public class WeaponSlotManager : MonoBehaviour
     private WeaponHolderSlot leftHandSlot;
     private WeaponHolderSlot rightHandSlot;
 
+    DamageCollider rightDamageCollider;
+
     private void Awake()
     {
         WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
@@ -33,8 +35,25 @@ public class WeaponSlotManager : MonoBehaviour
         else
         {
             rightHandSlot.LoadWeaponModel(weaponItem);
+            LoadRightWeaponDamageCollider();
         }
     }
 
+    #region Handle Weapon's Damage Colliders
+    private void LoadRightWeaponDamageCollider()
+    {
+        rightDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+    }
 
+    public void OpenRightDamageCollider()
+    {
+        rightDamageCollider.EnableDamageCollider();
+    }
+
+    public void CloseRightDamageCollider()
+    {
+        rightDamageCollider.DisableDamageCollider();
+    }
+    #endregion
 }
+

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    public static PlayerInventory Instance;
     WeaponSlotManager weaponSlotManager;
     public WeaponItem[] weaponItems;
     public WeaponItem currentWeapon;
@@ -14,6 +15,10 @@ public class PlayerInventory : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
     }
 
@@ -28,8 +33,11 @@ public class PlayerInventory : MonoBehaviour
 
             // Add the weapon item to the dictionary with the key.
             weaponDictionary.Add(weaponKey, weaponItems[i]);
-            
+
         }
+
+        currentWeapon = weaponItems[0];
+        weaponSlotManager.LoadWeaponOnSlot(currentWeapon, false);
        
     }
 

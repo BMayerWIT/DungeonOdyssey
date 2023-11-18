@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    GameInput gameInput;
-    
     Animator animator;
+
+    [Header("Player Flags")]
+    public bool canDoCombo;
     void Start()
     {
         
@@ -17,14 +18,12 @@ public class PlayerManager : MonoBehaviour
     
     void Update()
     {
-        GameInput.inputInstance.isInteracting = animator.GetBool("isInteracting");
-        GameInput.inputInstance.dashFlag = false;
+        canDoCombo = animator.GetBool("canDoCombo");
         
     }
 
     private void LateUpdate()
     {
-        GameInput.inputInstance.lightattack_Input = false;
-        GameInput.inputInstance.heavyattack_Input = false;
+        
     }
 }

@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
 
 
     
-    private Animator playerAnimator;
+    
     private PlayerAnimationHandler playerAnimationHandler;
 
     
@@ -50,9 +50,9 @@ public class Player : MonoBehaviour
         
 
         
-        playerAnimator = GetComponentInChildren<Animator>();
+        
         playerAnimationHandler= GetComponent<PlayerAnimationHandler>();
-        healthText.SetText("Health: " + health);
+        
     }
 
     private void Update()
@@ -60,11 +60,6 @@ public class Player : MonoBehaviour
         float delta = Time.deltaTime;
         GameInput.inputInstance.TickInput(delta);
 
-        
-
-
-       
-        
         HandleDash();
         DecreaseHealth();
         GameOver();

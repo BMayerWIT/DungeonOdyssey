@@ -13,7 +13,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     public float acceleration = 5.0f; // Acceleration rate
     public float deceleration = 5.0f; // Deceleration 
-    private float currentSpeed = 0.0f; // Current character speed
+    public float currentSpeed = 0.0f; // Current character speed
 
     public Transform orientation;
     private Vector2 inputVector;
@@ -21,7 +21,8 @@ public class PlayerLocomotion : MonoBehaviour
 
     private Vector3 yVelocity;
     private bool isWalking = false;
-    private bool isPlayerGrounded;
+    public bool isPlayerGrounded;
+    public bool isSprinting;
     [SerializeField] private CharacterController characterController;
 
     private void Start()
@@ -37,8 +38,6 @@ public class PlayerLocomotion : MonoBehaviour
         isWalking = movementVector != Vector3.zero;
 
         // Handle Movement mechanics and Ground checks
-        Debug.Log(isPlayerGrounded);
-
         GroundChecking();
         if (GameInput.inputInstance.Jumped() && isPlayerGrounded)
             Jump();
@@ -53,7 +52,7 @@ public class PlayerLocomotion : MonoBehaviour
         moveDirection = orientation.forward * inputVector.y + orientation.right * inputVector.x;
 
         // Determine if the player is sprinting
-        bool isSprinting = isPlayerGrounded && GameInput.inputInstance.IsSprinting() && !GameInput.inputInstance.IsCrouching();
+        isSprinting = isPlayerGrounded && GameInput.inputInstance.IsSprinting() && !GameInput.inputInstance.IsCrouching();
 
         // Calculate the horizontal speed based on sprinting state
         float targetSpeed = GetHorizontalSpeed(moveDirection, isSprinting);
@@ -67,6 +66,8 @@ public class PlayerLocomotion : MonoBehaviour
         {
             currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, deceleration * Time.deltaTime);
         }
+
+        
 
         // Update player movement with speed and direction
         characterController.Move(moveDirection * currentSpeed * Time.deltaTime);

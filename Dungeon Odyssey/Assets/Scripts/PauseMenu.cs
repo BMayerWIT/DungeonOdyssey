@@ -62,8 +62,7 @@ public class PauseMenu : MonoBehaviour
     public void LoadTutorial()
     {
         SceneManager.LoadScene("Tutorial");
-        StatsHandler.SaveData();
-        StatsHandler.LoadData();
+        
         Time.timeScale = 1f;
         Resume();
     }
@@ -71,8 +70,7 @@ public class PauseMenu : MonoBehaviour
     public void ReturnToMenu()
     {
         Resume();
-        StatsHandler.SaveData();
-        StatsHandler.LoadData();
+        
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

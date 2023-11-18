@@ -130,6 +130,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Block/Parry",
+                    "type": "Button",
+                    "id": "20ea5b4e-3f59-4207-852e-66bdbdae5674",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -367,7 +376,7 @@
                 {
                     "name": "",
                     "id": "f34faf35-cdbc-4eb9-ad5e-11e38690dc7d",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/equals",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -383,6 +392,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1bd6bf81-6594-418f-8155-6878b40c0d8d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block/Parry",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

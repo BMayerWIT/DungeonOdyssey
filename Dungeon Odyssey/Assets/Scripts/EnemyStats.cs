@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatsHandler : MonoBehaviour
+public class EnemyStats : MonoBehaviour
 {
     public int healthLevel = 10;
     public int maxHealth;
     public int currentHealth;
 
-    public HealthBar healthBar;
+    private Animator animator;
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     private void Start()
     {
         SetMaxHealthFromHealthLevel();
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        
     }
 
     private int SetMaxHealthFromHealthLevel()
@@ -27,6 +31,11 @@ public class StatsHandler : MonoBehaviour
     {
         currentHealth -= damage;
 
-        healthBar.SetCurrentHealth(currentHealth);
+        //animator.Play("Damage_01");
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Destroy(gameObject);
+        }
     }
 }
