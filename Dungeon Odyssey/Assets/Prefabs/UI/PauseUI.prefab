@@ -368,7 +368,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HUD: {fileID: 0}
-  pauseMenuCanvas: {fileID: 0}
+  menuList:
+  - {fileID: 661448403538144098}
+  - {fileID: 5938585916932928273}
+  - {fileID: 9185612996211001201}
+  - {fileID: 6745640843222662226}
+  - {fileID: 8786470784731512152}
 --- !u!1 &661448404884044144
 GameObject:
   m_ObjectHideFlags: 0
