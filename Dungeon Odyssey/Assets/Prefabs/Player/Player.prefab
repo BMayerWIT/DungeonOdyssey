@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 5221494272499772745}
   m_Layer: 0
   m_Name: FPCam
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -349,10 +349,9 @@ GameObject:
   - component: {fileID: 5221494272634699330}
   - component: {fileID: 5221494272634699331}
   - component: {fileID: 5221494272634699332}
-  - component: {fileID: 5221494272634699333}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -404,8 +403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstPersonCamera: {fileID: 5221494272499772746}
-  healthText: {fileID: 0}
-  scoreText: {fileID: 0}
   interactDistance: 0
 --- !u!114 &5221494272634699343
 MonoBehaviour:
@@ -420,9 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  sprintSpeed: 5
   gravity: -9.8
-  jumpForce: 1
   acceleration: 5
   deceleration: 5
   currentSpeed: 0
@@ -472,22 +467,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDoCombo: 0
---- !u!114 &5221494272634699333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5221494272634699351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24114408f761cd34da0ceab95ec148db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthLevel: 10
-  maxHealth: 0
-  currentHealth: 0
-  healthBar: {fileID: 0}
 --- !u!1 &5221494272708614158
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,10 +514,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 113570985995098188}
   fPCamera: {fileID: 5221494272499772746}
-  minYAngle: 20
-  maxYAngle: 70
-  rotationSmoothness: 10
-  distance: 5
 --- !u!1 &5221494273024455177
 GameObject:
   m_ObjectHideFlags: 0

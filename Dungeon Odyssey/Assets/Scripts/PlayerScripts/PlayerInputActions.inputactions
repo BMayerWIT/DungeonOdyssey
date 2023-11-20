@@ -139,6 +139,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseSkill1",
+                    "type": "Button",
+                    "id": "e8ead7fb-30fd-42d5-8c3a-850c3fccd44c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseSkill2",
+                    "type": "Button",
+                    "id": "6e8d1e89-a009-462a-b8b8-421fbf0bd7e4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseSkill3",
+                    "type": "Button",
+                    "id": "1778b7a8-d228-4f7e-9ba7-9bb2af183a58",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -403,6 +430,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Block/Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8a75041c-58e9-4348-837e-99b20d63b762",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseSkill1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3879c75-b00c-4d86-a07d-b792f9c839bc",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseSkill2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "960abdd5-0806-43d6-980b-ed6e30c2a0c5",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseSkill3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

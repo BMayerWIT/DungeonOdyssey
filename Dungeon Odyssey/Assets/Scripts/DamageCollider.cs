@@ -29,16 +29,16 @@ public class DamageCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision);
-        if (collision.tag == "Player")
-        {
-            StatsHandler statsHandler = collision.GetComponent<StatsHandler>();
+        //Debug.Log(collision);
+        //if (collision.tag == "Player")
+        //{
+        //    StatsHandler statsHandler = collision.GetComponent<StatsHandler>();
             
-            if (statsHandler != null )
-            {
-                statsHandler.TakeDamage(currentWeaponDamage);
-            }
-        }
+        //    if (statsHandler != null )
+        //    {
+        //        statsHandler.TakeDamage(currentWeaponDamage);
+        //    }
+        //}
 
         if (collision.tag == "Enemy") 
         {

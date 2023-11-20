@@ -16,18 +16,6 @@ public class Player : MonoBehaviour
     
     [SerializeField] private Camera firstPersonCamera;
     
- 
-
-    
-    [Header("Statistics")]
-    public static float health = 50f;
-    public static float score = 0f;
-    //TEMPORARY (MAKE ENTIRE HANDLER FOR THESE SYSTEMS
-    [SerializeField] private TextMeshProUGUI healthText;
-    [SerializeField] private TextMeshProUGUI scoreText;
-
-
-    
     
     private PlayerAnimationHandler playerAnimationHandler;
 
@@ -35,7 +23,7 @@ public class Player : MonoBehaviour
     private float standingHeight;
     private bool isPlayerGrounded;
     
-    private bool gameOver = false;
+   
     
 
     [Header("Interacting")]
@@ -61,10 +49,9 @@ public class Player : MonoBehaviour
         GameInput.inputInstance.TickInput(delta);
 
         HandleDash();
-        DecreaseHealth();
-        GameOver();
+        
+        
 
-        scoreText.SetText("Score: " + score);
         
     }
 
@@ -97,27 +84,5 @@ public class Player : MonoBehaviour
     }
 
     
-
-   
-    private void DecreaseHealth()
-    {
-        if (GameInput.inputInstance.DecreaseHealth())
-        { 
-            health -= 5;
-            healthText.SetText("Health: " + health);
-        }
-        if (health <= 0)
-        {
-            gameOver = true;
-        }
-    }
-
-    private void GameOver()
-    {
-        if (gameOver)
-        {
-            SceneManager.LoadScene("GameOver");
-        }
-    }
     
 }

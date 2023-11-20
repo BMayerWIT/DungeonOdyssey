@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerLocomotion : MonoBehaviour
 {
 
-    [Header("Movement")]
-    [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private float sprintSpeed = 5f;
+    [Header("Movement Stats")]
+    public float moveSpeed = 2f;
+    private float sprintSpeed = 5f;
     [SerializeField] private float gravity = -9.8f;
-    [SerializeField] private float jumpForce = 2f;
+    private float jumpForce;
 
     public float acceleration = 5.0f; // Acceleration rate
     public float deceleration = 5.0f; // Deceleration 

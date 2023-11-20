@@ -161,6 +161,33 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSkill1"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8ead7fb-30fd-42d5-8c3a-850c3fccd44c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSkill2"",
+                    ""type"": ""Button"",
+                    ""id"": ""6e8d1e89-a009-462a-b8b8-421fbf0bd7e4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSkill3"",
+                    ""type"": ""Button"",
+                    ""id"": ""1778b7a8-d228-4f7e-9ba7-9bb2af183a58"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -427,6 +454,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Block/Parry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a75041c-58e9-4348-837e-99b20d63b762"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSkill1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3879c75-b00c-4d86-a07d-b792f9c839bc"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSkill2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""960abdd5-0806-43d6-980b-ed6e30c2a0c5"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSkill3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -450,6 +510,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_BlockParry = m_Player.FindAction("Block/Parry", throwIfNotFound: true);
+        m_Player_UseSkill1 = m_Player.FindAction("UseSkill1", throwIfNotFound: true);
+        m_Player_UseSkill2 = m_Player.FindAction("UseSkill2", throwIfNotFound: true);
+        m_Player_UseSkill3 = m_Player.FindAction("UseSkill3", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -524,6 +587,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_BlockParry;
+    private readonly InputAction m_Player_UseSkill1;
+    private readonly InputAction m_Player_UseSkill2;
+    private readonly InputAction m_Player_UseSkill3;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -543,6 +609,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @BlockParry => m_Wrapper.m_Player_BlockParry;
+        public InputAction @UseSkill1 => m_Wrapper.m_Player_UseSkill1;
+        public InputAction @UseSkill2 => m_Wrapper.m_Player_UseSkill2;
+        public InputAction @UseSkill3 => m_Wrapper.m_Player_UseSkill3;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -597,6 +666,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @BlockParry.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlockParry;
                 @BlockParry.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlockParry;
                 @BlockParry.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlockParry;
+                @UseSkill1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill1;
+                @UseSkill1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill1;
+                @UseSkill1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill1;
+                @UseSkill2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill2;
+                @UseSkill2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill2;
+                @UseSkill2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill2;
+                @UseSkill3.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill3;
+                @UseSkill3.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill3;
+                @UseSkill3.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill3;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -646,6 +724,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @BlockParry.started += instance.OnBlockParry;
                 @BlockParry.performed += instance.OnBlockParry;
                 @BlockParry.canceled += instance.OnBlockParry;
+                @UseSkill1.started += instance.OnUseSkill1;
+                @UseSkill1.performed += instance.OnUseSkill1;
+                @UseSkill1.canceled += instance.OnUseSkill1;
+                @UseSkill2.started += instance.OnUseSkill2;
+                @UseSkill2.performed += instance.OnUseSkill2;
+                @UseSkill2.canceled += instance.OnUseSkill2;
+                @UseSkill3.started += instance.OnUseSkill3;
+                @UseSkill3.performed += instance.OnUseSkill3;
+                @UseSkill3.canceled += instance.OnUseSkill3;
             }
         }
     }
@@ -667,5 +754,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnBlockParry(InputAction.CallbackContext context);
+        void OnUseSkill1(InputAction.CallbackContext context);
+        void OnUseSkill2(InputAction.CallbackContext context);
+        void OnUseSkill3(InputAction.CallbackContext context);
     }
 }

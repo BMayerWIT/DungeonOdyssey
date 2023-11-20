@@ -25,6 +25,9 @@ public class GameInput : MonoBehaviour
     private InputAction _sprint;
     private InputAction _mouseX;
     private InputAction _mouseY;
+    private InputAction _skill1;
+    private InputAction _skill2;
+    private InputAction _skill3;
 
     Vector2 inputVector;
     float mouseX;
@@ -37,6 +40,9 @@ public class GameInput : MonoBehaviour
     bool shouldDecreaseHealth;
     bool dashInput;
     bool pauseState;
+    bool skill1;
+    bool skill2;
+    bool skill3;
     Vector2 mouseVector;
 
     public bool dashFlag = false;
@@ -79,6 +85,9 @@ public class GameInput : MonoBehaviour
         _sprint = _inputActions.actions["Sprint"];
         _mouseX = _inputActions.actions["MouseX"];
         _mouseY = _inputActions.actions["MouseY"];
+        _skill1 = _inputActions.actions["UseSkill1"];
+        _skill2 = _inputActions.actions["UseSkill2"];
+        _skill3 = _inputActions.actions["UseSkill3"];
 
     }
 
@@ -96,6 +105,9 @@ public class GameInput : MonoBehaviour
         shouldDecreaseHealth = _decreaseHealth.WasPressedThisFrame();
         dashInput = _dash.WasPressedThisFrame();
         lightattack_Input = _lightAttack.WasPressedThisFrame();
+        skill1 = _skill1.WasPressedThisFrame();
+        skill2 = _skill2.WasPressedThisFrame();
+        skill3 = _skill3.WasPressedThisFrame();
         
         
         mouseVector = _mouse.ReadValue<Vector2>();
@@ -202,6 +214,9 @@ public class GameInput : MonoBehaviour
         }
     }
 
-    
+    public bool SkillInput1()
+    {
+        return skill1;
+    }
 
 }

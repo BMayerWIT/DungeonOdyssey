@@ -106,7 +106,7 @@ public class Enemy : MonoBehaviour
         if (boxCollider != null)
             boxCollider.enabled = false;
         Destroy(gameObject);
-        Player.score += 5;
+        
     }
 
     private void WaypointHandler()
