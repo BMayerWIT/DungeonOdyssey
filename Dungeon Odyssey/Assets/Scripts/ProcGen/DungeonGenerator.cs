@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using Unity.VisualScripting;
-using UnityEditor.Timeline.Actions;
+
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.SceneManagement;
@@ -37,7 +37,7 @@ public class DungeonGenerator : MonoBehaviour
 
 
     private GameObject goCamera, goPlayer;
-    List<Connector> availableConnectors = new List<Connector>();
+    private List<Connector> availableConnectors = new List<Connector>();
     private Color startLightColor = Color.white;
     private Transform tileFrom, tileTo, tileRoot;
     private Transform container;
@@ -305,7 +305,7 @@ public class DungeonGenerator : MonoBehaviour
             return null;
         }
 
-        List<Connector> connectorList = tile.GetComponentsInChildren<Connector>().ToList().FindAll(x => x.isConnected == false);
+        List<Connector> connectorList = tile.GetComponentsInChildren<Connector>().ToList().FindAll(x => x.isConnected == false); //
         if (connectorList.Count > 0 )
         {
             int connectorIndex = Random.Range(0, connectorList.Count);

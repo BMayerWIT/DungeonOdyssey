@@ -16,8 +16,8 @@ public class Connector : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (dungeonGenerator.drawGizmos)
-        {
+        //if (dungeonGenerator.drawGizmos && dungeonGenerator != null)
+        //{
             Gizmos.color = Color.cyan;
             Vector2 halfSize = size * 0.5f;
             Vector3 offset = transform.position + transform.up * halfSize.y;
@@ -44,6 +44,9 @@ public class Connector : MonoBehaviour
             Gizmos.DrawLine(topLeft, offset);
             Gizmos.DrawLine(bottomRight, offset);
             Gizmos.DrawLine(bottomLeft, offset);
-        }
+        //}
+        //else { return; }
     }
+
+    
 }

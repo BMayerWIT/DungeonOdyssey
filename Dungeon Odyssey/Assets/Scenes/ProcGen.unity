@@ -732,6 +732,11 @@ MonoBehaviour:
   - {fileID: 2774501433356932287, guid: 16e8e07419e6f8a4288e6902e022cb84, type: 3}
   - {fileID: 2429706405458006136, guid: 9cb69457ed001664d89b18eb86750c39, type: 3}
   - {fileID: 4025635714066209756, guid: c047de9958b9239479f51c4357ca1f88, type: 3}
+  - {fileID: 7524961265160854550, guid: 159a7ac8cc7bd644394519f40865cc60, type: 3}
+  - {fileID: 3229671212712611142, guid: 054940fcfa39a6b42864269a6fed4eb1, type: 3}
+  - {fileID: 6853163278005129257, guid: 3d8bc002f38d7a148bc7d108cd947866, type: 3}
+  - {fileID: 8754271959214047983, guid: 2e41ab79c0bc0074097e7679796a719c, type: 3}
+  - {fileID: 6883443913969022310, guid: cb3fb7d11e14b9847bbdd63aa162fe91, type: 3}
   blockedPrefabs:
   - {fileID: 3837942946822614008, guid: 391aac0f0e96673418ac5e358ef013c8, type: 3}
   doorPrefabs:
@@ -741,15 +746,15 @@ MonoBehaviour:
   - {fileID: 5725841205497494014, guid: dd6f8e20b04d08c4eacb6b957e853916, type: 3}
   - {fileID: 3490924888546297153, guid: efb64eab107846a48889f16dc39b802c, type: 3}
   useBoxColliders: 0
-  useLightsForDebugging: 0
+  useLightsForDebugging: 1
   restoreLightsAfterDebugging: 0
-  drawGizmos: 0
+  drawGizmos: 1
   toggleMapKey: 109
-  mainLength: 86
-  branchLength: 11
-  numberOfBranches: 25
+  mainLength: 20
+  branchLength: 10
+  numberOfBranches: 8
   doorSpawnPercent: 25
-  constructionDelay: 0.105
+  constructionDelay: 0.085
   generatedTiles: []
 --- !u!4 &1827954838
 Transform:
@@ -4035,6 +4040,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.069000244
       objectReference: {fileID: 0}
+    - target: {fileID: 8933393890542695285, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 615.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933393890583088142, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -131
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933393891605728429, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 811
+      objectReference: {fileID: 0}
     - target: {fileID: 8933393891649144327, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4050,6 +4067,10 @@ PrefabInstance:
     - target: {fileID: 8933393892362726686, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933393892366053189, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 8933393892444053754, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
       propertyPath: m_AnchorMax.x
