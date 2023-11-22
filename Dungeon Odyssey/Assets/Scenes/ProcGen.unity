@@ -752,7 +752,7 @@ MonoBehaviour:
   toggleMapKey: 109
   mainLength: 20
   branchLength: 10
-  numberOfBranches: 8
+  numberOfBranches: 18
   doorSpawnPercent: 25
   constructionDelay: 0.085
   generatedTiles: []
