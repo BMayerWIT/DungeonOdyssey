@@ -11,62 +11,65 @@ public class SkillManager : MonoBehaviour
     private bool skill1Activated;
 
     [Header("Selected Skills")]
-    public Skill selectedSkill1;
-    public Skill selectedSkill2;
-    public Skill selectedSkill3;
+    public Skill[] selectedSkills;
+    
 
     [Header("Image Objects And Sliders")]
-    public Image selectedImage1;
-    public Image selectedImageOutline;
-    public Slider skill1Slider;
-    public Image selectedImage2;
-    public Image selectedImage3;
+    public List<Image> skillSprites = new List<Image>();
+    public List<Image> skillSpriteOutlines= new  List<Image>();
+    public List<Slider> skillSliders = new List<Slider>();
+    public List<bool> cooldownList = new List<bool>();
 
     private float skill1LastActivatedTime = -20;
 
-    private MovementSkill movementSkillSlot1 = null;
+    public List<MovementSkill> movementSkillSlot = new List<MovementSkill>();
+    
+    
     
 
     private void Start()
     {
-
-        selectedImage1.sprite = selectedSkill1.skillIcon;
-        selectedImageOutline.enabled = false;
+        HandleSkillTypes();
+        for (int i = 0; i < selectedSkills.Length; i++)
+        {
+            skillSprites[i].sprite = selectedSkills[i].skillIcon;
+            skillSpriteOutlines[i].enabled = false;
+        }
+        
         player = GameObject.FindGameObjectWithTag("Player");
         movementStats = player.GetComponent<PlayerLocomotion>();
     }
 
     private void Update()
     {
-        movementSkillSlot1 = CheckSkillIsMovementType(selectedSkill1);
+        
         UseSkill1();
         UpdateCooldownSlider();
-        
     }
 
-    private bool isCooldownActive = false;
+    
 
     private void UseSkill1()
     {
         // Check if the skill is not in cooldown
-        if (!isCooldownActive)
+        if (!cooldownList[0])
         {
             // Check if enough time has passed since the last activation
-            if (Time.time - skill1LastActivatedTime >= movementSkillSlot1.skillCooldown)
+            if (Time.time - skill1LastActivatedTime >= movementSkillSlot[0].skillCooldown)
             {
                 // Check if the skill input is pressed and the skill is not already activated
                 if (GameInput.inputInstance.SkillInput1() && !skill1Activated)
                 {
                     // Activate the skill
                     skill1Activated = true;
-                    selectedImageOutline.enabled = true;
+                    skillSpriteOutlines[0].enabled = true;
                     // Store the activation time
                     skill1LastActivatedTime = Time.time;
 
-                    if (movementSkillSlot1 != null)
+                    if (movementSkillSlot[0] != null)
                     {
                         // Apply skill effects
-                        movementStats.moveSpeed *= movementSkillSlot1.walkSpeedMultiplier;
+                        movementStats.moveSpeed *= movementSkillSlot[0].walkSpeedMultiplier;
 
                         // Deactivate the skill after a certain duration
                         StartCoroutine(DeactivateSkillAfterDuration());
@@ -79,11 +82,11 @@ public class SkillManager : MonoBehaviour
     private IEnumerator DeactivateSkillAfterDuration()
     {
         // Wait for the skill duration
-        yield return new WaitForSeconds(movementSkillSlot1.skillDuration);
+        yield return new WaitForSeconds(movementSkillSlot[0].skillDuration);
 
         // Deactivate the skill
-        selectedImageOutline.enabled = false;
-        DeactivateSkill1();
+        skillSpriteOutlines[0].enabled = false;
+        DeactivateSkill();
 
         // Start the cooldown timer and slider update after the skill duration has ended
         StartCoroutine(StartCooldownAndSliderUpdate());
@@ -91,42 +94,42 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator StartCooldownAndSliderUpdate()
     {
-        isCooldownActive = true;
+        cooldownList[0] = true;
 
         // Wait for the remaining cooldown time
-        yield return new WaitForSeconds(movementSkillSlot1.skillCooldown);
+        yield return new WaitForSeconds(movementSkillSlot[0].skillCooldown);
 
         // Reset the activation status and cooldown flag after cooldown
         skill1Activated = false;
-        isCooldownActive = false;
+        cooldownList[0] = false;
 
         
         
     }
 
-    private void DeactivateSkill1()
+    private void DeactivateSkill()
     {
-        if (movementSkillSlot1 != null)
+        if (movementSkillSlot[0] != null)
         {
             // Revert the changes made by the skill
-            movementStats.moveSpeed /= movementSkillSlot1.walkSpeedMultiplier;
+            movementStats.moveSpeed /= movementSkillSlot[0].walkSpeedMultiplier;
         }
     }
 
     private void UpdateCooldownSlider()
     {
-        if (isCooldownActive)
+        if (cooldownList[0])
         {
 
-            float elapsedTime = Time.time - (skill1LastActivatedTime + movementSkillSlot1.skillDuration);
+            float elapsedTime = Time.time - (skill1LastActivatedTime + movementSkillSlot[0].skillDuration);
             Debug.Log(elapsedTime);
-            float cooldownProgress = Mathf.Clamp01(elapsedTime / (movementSkillSlot1.skillCooldown));
-            skill1Slider.value = cooldownProgress; // Adjusted for correct progress representation
+            float cooldownProgress = Mathf.Clamp01(elapsedTime / (movementSkillSlot[0].skillCooldown));
+            skillSliders[0].value = cooldownProgress; // Adjusted for correct progress representation
         }
         else
         {
             // Skill not activated, reset slider
-            skill1Slider.value = 0f;
+            skillSliders[0].value = 0f;
         }
     }
 
@@ -136,11 +139,23 @@ public class SkillManager : MonoBehaviour
 
     private MovementSkill CheckSkillIsMovementType(Skill selectedSkill)
     {
-        if (selectedSkill1 is MovementSkill)
+        if (selectedSkill is MovementSkill)
         {
-            MovementSkill skill = (MovementSkill)selectedSkill1;
+            MovementSkill skill = (MovementSkill)selectedSkill;
             return skill;
         }
         return null;
     }
+
+    private void HandleSkillTypes()
+    {
+        for (int i = 0; i < selectedSkills.Length; i++)
+        {
+           
+            MovementSkill validMovementSkill = CheckSkillIsMovementType(selectedSkills[i]);
+            movementSkillSlot.Add(validMovementSkill);
+        }
+
+    }
+     
 }
