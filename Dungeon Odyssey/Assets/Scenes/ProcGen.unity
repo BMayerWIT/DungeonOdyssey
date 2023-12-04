@@ -196,39 +196,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &381352076 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8933393890539711089, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
-  m_PrefabInstance: {fileID: 8933393890786497277}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &509264174 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8933393890411779027, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
-  m_PrefabInstance: {fileID: 8933393890786497277}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &606877492 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8933393891388122569, guid: 9151b066dc8ac0f4c9b96affc5de37f5, type: 3}
-  m_PrefabInstance: {fileID: 8933393890786497277}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &612102883
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,14 +403,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9516e92ba3f29cc40b11de2dbf3df8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedSkill1: {fileID: 11400000, guid: 64637c5babc1ccb4585a0aeebdfa7354, type: 2}
-  selectedSkill2: {fileID: 0}
-  selectedSkill3: {fileID: 0}
-  selectedImage1: {fileID: 381352076}
-  selectedImageOutline: {fileID: 509264174}
-  skill1Slider: {fileID: 606877492}
-  selectedImage2: {fileID: 0}
-  selectedImage3: {fileID: 0}
+  selectedSkills: []
+  skillSprites: []
+  skillSpriteOutlines: []
+  skillSliders: []
+  cooldown1: 0
+  cooldown2: 0
+  skillSlots: []
 --- !u!4 &940198579
 Transform:
   m_ObjectHideFlags: 0
@@ -745,16 +711,16 @@ MonoBehaviour:
   exitPrefabs:
   - {fileID: 5725841205497494014, guid: dd6f8e20b04d08c4eacb6b957e853916, type: 3}
   - {fileID: 3490924888546297153, guid: efb64eab107846a48889f16dc39b802c, type: 3}
-  useBoxColliders: 0
-  useLightsForDebugging: 1
+  useBoxColliders: 1
+  useLightsForDebugging: 0
   restoreLightsAfterDebugging: 0
   drawGizmos: 1
   toggleMapKey: 109
-  mainLength: 20
-  branchLength: 10
-  numberOfBranches: 18
+  mainLength: 19
+  branchLength: 12
+  numberOfBranches: 7
   doorSpawnPercent: 25
-  constructionDelay: 0.085
+  constructionDelay: 0
   generatedTiles: []
 --- !u!4 &1827954838
 Transform:

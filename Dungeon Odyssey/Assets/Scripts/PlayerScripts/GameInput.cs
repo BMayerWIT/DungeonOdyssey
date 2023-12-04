@@ -219,4 +219,9 @@ public class GameInput : MonoBehaviour
         return skill1;
     }
 
+    public bool SkillInput2()
+    {
+        return skill2;
+    }
+
 }

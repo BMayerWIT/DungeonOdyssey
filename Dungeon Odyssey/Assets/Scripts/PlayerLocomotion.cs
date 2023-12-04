@@ -4,12 +4,26 @@ using UnityEngine;
 
 public class PlayerLocomotion : MonoBehaviour
 {
+    [HideInInspector]
+    public const float DEFAULT_MOVE_SPEED = 2f;
+    [HideInInspector]
+    public const float DEFAULT_SPRINT_SPEED = 5f;
+    [HideInInspector]
+    public const float DEFAULT_JUMP_FORCE = 0.7f;
+    [HideInInspector]
+    public const float DEFAULT_WALK_MULTIPLIER = 0;
+    [HideInInspector]
+    public const float DEFAULT_SPRINT_MULTIPLIER = 0;
+
+
+
+
 
     [Header("Movement Stats")]
     public float moveSpeed = 2f;
-    private float sprintSpeed = 5f;
+    public float sprintSpeed = 5f;
     [SerializeField] private float gravity = -9.8f;
-    private float jumpForce;
+    public float jumpForce = 0.7f;
 
     public float acceleration = 5.0f; // Acceleration rate
     public float deceleration = 5.0f; // Deceleration 
@@ -129,5 +143,12 @@ public class PlayerLocomotion : MonoBehaviour
         }
 
         return horizontalSpeed;
+    }
+
+    public void DefaultMovementStats()
+    {
+        moveSpeed = DEFAULT_MOVE_SPEED;
+        sprintSpeed = DEFAULT_SPRINT_SPEED;
+        jumpForce = DEFAULT_JUMP_FORCE;
     }
 }

@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb43a105e8d3cc049a56aec20b432ee7, type: 3}
-  m_Name: SwiftStep
+  m_Name: New Ability
   m_EditorClassIdentifier: 
-  skillIcon: {fileID: 21300000, guid: 247ed5515ee6a0443bc920c243132fe0, type: 3}
-  skillName: Swift Step
-  movement: 1
+  skillIcon: {fileID: 0}
+  skillName: 
+  movement: 0
   combat: 0
   passive: 0
   sprintSpeedBaseIncrease: 0
   walkSpeedBaseIncrease: 0
-  sprintSpeedMultiplier: 1.2
-  walkSpeedMultiplier: 2
+  sprintSpeedMultiplier: 0
+  walkSpeedMultiplier: 0
   accelerationIncrease: 0
   staminaRegainSpeed: 0
-  skillDuration: 10
-  skillCooldown: 2
+  skillDuration: 0
+  skillCooldown: 0
   damageBaseIncrease: 0
   damageMultiplier: 0
   criticalHitPercent: 0
