@@ -11,4 +11,10 @@ public class Skill : ScriptableObject
     public bool movement;
     public bool combat;
     public bool passive;
+    [Header("Info")]
+    public string description;
+    public bool isUnlocked;
+    public int Cost;
+    public bool isUnlockable;
+
 }

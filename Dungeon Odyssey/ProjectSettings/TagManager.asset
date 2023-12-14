@@ -7,6 +7,7 @@ TagManager:
   - whatIsGround
   - Hittable
   - Enemy
+  - EquipButton
   layers:
   - Default
   - TransparentFX

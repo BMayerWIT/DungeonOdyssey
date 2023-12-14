@@ -23,6 +23,8 @@ public class Ability : Skill
     public int skillDuration;
     public int skillCooldown;
 
+
+
     [Header("Combat Skill Attributes")]
     public int damageBaseIncrease;
     public int damageMultiplier;

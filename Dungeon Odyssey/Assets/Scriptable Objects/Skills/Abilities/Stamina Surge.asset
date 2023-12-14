@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb43a105e8d3cc049a56aec20b432ee7, type: 3}
+  m_Name: Stamina Surge
+  m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: f4d9983f5ebbf67499977733d8ee7781, type: 3}
+  skillName: Stamina Surge
+  movement: 1
+  combat: 0
+  passive: 0
+  description: Increases stamina regeneration
+  isUnlocked: 1
+  Cost: 1
+  isUnlockable: 1
+  sprintSpeedBaseIncrease: 0
+  walkSpeedBaseIncrease: 0
+  sprintSpeedMultiplier: 0
+  walkSpeedMultiplier: 0
+  accelerationIncrease: 0
+  staminaRegainSpeed: 5
+  skillDuration: 30
+  skillCooldown: 60
+  damageBaseIncrease: 0
+  damageMultiplier: 0
+  criticalHitPercent: 0

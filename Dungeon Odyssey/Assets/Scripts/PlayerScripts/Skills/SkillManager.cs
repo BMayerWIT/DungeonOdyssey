@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SkillManager : MonoBehaviour
 {
+    string currentSceneName;
+    public int skillPoints = 5;
     public static SkillManager instance;
     private GameObject player;
     private PlayerLocomotion movementStats;
-    
+
 
     [Header("Selected Skills")]
     public Skill[] selectedSkills;
@@ -27,31 +30,46 @@ public class SkillManager : MonoBehaviour
     private float skill2LastActivatedTime = -20;
 
     public List<Ability> skillSlots = new List<Ability>();
-    
-    
-    
+
+    private void Awake()
+    {
+        if (instance == null)
+        instance = this;
+    }
+
 
     private void Start()
     {
-        HandleSkillTypes();
-        for (int i = 0; i < selectedSkills.Length; i++)
+        selectedSkills = new Skill[3];
+        currentSceneName = SceneManager.GetActiveScene().name;
+        if (currentSceneName != "Menu")
         {
-            skillSprites[i].sprite = selectedSkills[i].skillIcon;
-            skillSpriteOutlines[i].enabled = false;
-            
+            HandleSkillTypes();
+            for (int i = 0; i < selectedSkills.Length; i++)
+            {
+                skillSprites[i].sprite = selectedSkills[i].skillIcon;
+                skillSpriteOutlines[i].enabled = false;
+
+            }
+
+            player = GameObject.FindGameObjectWithTag("Player");
+            movementStats = player.GetComponent<PlayerLocomotion>();
         }
         
-        player = GameObject.FindGameObjectWithTag("Player");
-        movementStats = player.GetComponent<PlayerLocomotion>();
+        
+        
     }
 
     private void Update()
     {
+        if (currentSceneName != "Menu")
+        {
+            UseSkill1();
+            UseSkill2();
+            UpdateCooldownSlider1();
+            UpdateCooldownSlider2();
+        }
         
-        UseSkill1();
-        UseSkill2();
-        UpdateCooldownSlider1();
-        UpdateCooldownSlider2();
     }
 
 
@@ -252,8 +270,9 @@ private void HandleMovementSkill(Ability skill)
         movementStats.moveSpeed -= skill.walkSpeedBaseIncrease;
         movementStats.sprintSpeed -= skill.sprintSpeedBaseIncrease;
     }
-
-    
-
      
+    public void DeductSkillPoints(int cost)
+    {
+        skillPoints -= cost;
+    }
 }
