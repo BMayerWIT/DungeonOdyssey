@@ -29,7 +29,14 @@ public class SkillManager : MonoBehaviour
     private float skill1LastActivatedTime = -20;
     private float skill2LastActivatedTime = -20;
 
-    public List<Ability> skillSlots = new List<Ability>();
+    public Ability[] AbilitySlots = new Ability[3];
+    public Ability abilitySlot1;
+    public Ability abilitySlot2;
+    public Ability abilitySlot3;
+    public MovementSkill movementSkillSlot1;
+    public MovementSkill movementSkillSlot2;
+    public MovementSkill movementSkillSlot3;
+
 
     private void Awake()
     {
@@ -41,6 +48,7 @@ public class SkillManager : MonoBehaviour
     private void Start()
     {
         selectedSkills = new Skill[3];
+        selectedSkills = SaveAndLoad.instance.skillSlotData.savedSkills;
         currentSceneName = SceneManager.GetActiveScene().name;
         if (currentSceneName != "Menu")
         {
@@ -76,32 +84,39 @@ public class SkillManager : MonoBehaviour
     #region SKILLONE
     private void UseSkill1()
     {
-        // Check if the skill is not in cooldown
-        if (!cooldown1)
+        if (abilitySlot1 != null)
         {
-            // Check if enough time has passed since the last activation
-            if (Time.time - skill1LastActivatedTime >= skillSlots[0].skillCooldown)
+            // Check if the skill is not in cooldown
+            if (!cooldown1)
             {
-                // Check if the skill input is pressed and the skill is not already activated
-                if (GameInput.inputInstance.SkillInput1() && !skill1Activated)
+                // Check if enough time has passed since the last activation
+                if (Time.time - skill1LastActivatedTime >= abilitySlot1.skillCooldown)
                 {
-                    // Activate the skill
-                    skill1Activated = true;
-                    skillSpriteOutlines[0].enabled = true;
-                    // Store the activation time
-                    skill1LastActivatedTime = Time.time;
-                    HandleMovementSkill(skillSlots[0]);
-                    // Deactivate the skill after a certain duration
-                    StartCoroutine(DeactivateSkillAfterDuration1());
+                    // Check if the skill input is pressed and the skill is not already activated
+                    if (GameInput.inputInstance.SkillInput1() && !skill1Activated)
+                    {
+                        // Activate the skill
+                        skill1Activated = true;
+                        skillSpriteOutlines[0].enabled = true;
+                        // Store the activation time
+                        skill1LastActivatedTime = Time.time;
+                        HandleMovementAbility(abilitySlot1);
+                        // Deactivate the skill after a certain duration
+                        StartCoroutine(DeactivateSkillAfterDuration1());
+                    }
                 }
             }
+        }
+        else if (movementSkillSlot1 != null)
+        {
+            HandleDashSkill();
         }
     }
 
     private IEnumerator DeactivateSkillAfterDuration1()
     {
         // Wait for the skill duration
-        yield return new WaitForSeconds(skillSlots[0].skillDuration);
+        yield return new WaitForSeconds(abilitySlot1.skillDuration);
 
         // Deactivate the skill
         skillSpriteOutlines[0].enabled = false;
@@ -116,7 +131,7 @@ public class SkillManager : MonoBehaviour
         cooldown1 = true;
 
         // Wait for the remaining cooldown time
-        yield return new WaitForSeconds(skillSlots[0].skillCooldown);
+        yield return new WaitForSeconds(abilitySlot1.skillCooldown);
 
         // Reset the activation status and cooldown flag after cooldown
         skill1Activated = false;
@@ -128,9 +143,9 @@ public class SkillManager : MonoBehaviour
 
     private void DeactivateSkill1()
     {
-        if (skillSlots[0] != null)
+        if (abilitySlot1 != null)
         {
-            RevertSkillChanges(skillSlots[0]);
+            RevertSkillChanges(abilitySlot1);
         }
     }
 
@@ -139,9 +154,9 @@ public class SkillManager : MonoBehaviour
         if (cooldown1)
         {
 
-            float elapsedTime = Time.time - (skill1LastActivatedTime + skillSlots[0].skillDuration);
+            float elapsedTime = Time.time - (skill1LastActivatedTime + abilitySlot1.skillDuration);
             Debug.Log(elapsedTime);
-            float cooldownProgress = Mathf.Clamp01(elapsedTime / (skillSlots[0].skillCooldown));
+            float cooldownProgress = Mathf.Clamp01(elapsedTime / (abilitySlot1.skillCooldown));
             skillSliders[0].value = cooldownProgress; // Adjusted for correct progress representation
         }
         else
@@ -156,32 +171,39 @@ public class SkillManager : MonoBehaviour
     #region SKILLTWO
     private void UseSkill2()
     {
-        // Check if the skill is not in cooldown
-        if (!cooldown2)
+        if (abilitySlot2 != null)
         {
-            // Check if enough time has passed since the last activation
-            if (Time.time - skill2LastActivatedTime >= skillSlots[1].skillCooldown)
+            // Check if the skill is not in cooldown
+            if (!cooldown2)
             {
-                // Check if the skill input is pressed and the skill is not already activated
-                if (GameInput.inputInstance.SkillInput2() && !skill2Activated)
+                // Check if enough time has passed since the last activation
+                if (Time.time - skill2LastActivatedTime >= abilitySlot2.skillCooldown)
                 {
-                    // Activate the skill
-                    skill2Activated = true;
-                    skillSpriteOutlines[1].enabled = true;
-                    // Store the activation time
-                    skill2LastActivatedTime = Time.time;
-                    HandleMovementSkill(skillSlots[1]);
-                    // Deactivate the skill after a certain duration
-                    StartCoroutine(DeactivateSkillAfterDuration2());
+                    // Check if the skill input is pressed and the skill is not already activated
+                    if (GameInput.inputInstance.SkillInput2() && !skill2Activated)
+                    {
+                        // Activate the skill
+                        skill2Activated = true;
+                        skillSpriteOutlines[1].enabled = true;
+                        // Store the activation time
+                        skill2LastActivatedTime = Time.time;
+                        HandleMovementAbility(abilitySlot2);
+                        // Deactivate the skill after a certain duration
+                        StartCoroutine(DeactivateSkillAfterDuration2());
+                    }
                 }
             }
+        }
+        else if (movementSkillSlot2 != null)
+        {
+            HandleDashSkill();
         }
     }
 
     private IEnumerator DeactivateSkillAfterDuration2()
     {
         // Wait for the skill duration
-        yield return new WaitForSeconds(skillSlots[1].skillDuration);
+        yield return new WaitForSeconds(abilitySlot2.skillDuration);
 
         // Deactivate the skill
         skillSpriteOutlines[1].enabled = false;
@@ -196,7 +218,7 @@ public class SkillManager : MonoBehaviour
         cooldown2 = true;
 
         // Wait for the remaining cooldown time
-        yield return new WaitForSeconds(skillSlots[1].skillCooldown);
+        yield return new WaitForSeconds(abilitySlot2.skillCooldown);
 
         // Reset the activation status and cooldown flag after cooldown
         skill2Activated = false;
@@ -208,9 +230,9 @@ public class SkillManager : MonoBehaviour
 
     private void DeactivateSkill2()
     {
-        if (skillSlots[1] != null);
+        if (abilitySlot2 != null);
         {
-            RevertSkillChanges(skillSlots[1]);
+            RevertSkillChanges(abilitySlot2);
         }
     }
 
@@ -219,9 +241,9 @@ public class SkillManager : MonoBehaviour
         if (cooldown2)
         {
 
-            float elapsedTime = Time.time - (skill2LastActivatedTime + skillSlots[1].skillDuration);
+            float elapsedTime = Time.time - (skill2LastActivatedTime + abilitySlot2.skillDuration);
             Debug.Log(elapsedTime);
-            float cooldownProgress = Mathf.Clamp01(elapsedTime / (skillSlots[1].skillCooldown));
+            float cooldownProgress = Mathf.Clamp01(elapsedTime / (abilitySlot2.skillCooldown));
             skillSliders[1].value = cooldownProgress; // Adjusted for correct progress representation
         }
         else
@@ -235,30 +257,55 @@ public class SkillManager : MonoBehaviour
 
     private void HandleSkillTypes()
     {
-        for (int i = 0; i < selectedSkills.Length; i++)
-        {
 
-            if (selectedSkills[i] is Ability)
-            {
-                Ability skill = (Ability)selectedSkills[i];
-                skillSlots.Add(skill);
-            } 
+
+        if (selectedSkills[0] is Ability)
+        {
+            Ability skill = (Ability)selectedSkills[0];
+            abilitySlot1 = skill;
+        }
+        else if (selectedSkills[0] is MovementSkill)
+        {
+            MovementSkill skill = (MovementSkill)selectedSkills[0];
+            movementSkillSlot1 = skill;
+        }
+
+        if (selectedSkills[1] is Ability)
+        {
+            Ability skill = (Ability)selectedSkills[1];
+            abilitySlot2 = skill;
+        }
+        else if (selectedSkills[1] is MovementSkill)
+        {
+            MovementSkill skill = (MovementSkill)selectedSkills[1];
+            movementSkillSlot2 = skill;
+        }
+
+        if (selectedSkills[2] is Ability)
+        {
+            Ability skill = (Ability)selectedSkills[2];
+            abilitySlot3 = skill;
+        }
+        else if (selectedSkills[2] is MovementSkill)
+        {
+            MovementSkill skill = (MovementSkill)selectedSkills[2];
+            movementSkillSlot3 = skill;
         }
 
     }
 
 
-private void HandleMovementSkill(Ability skill)
+private void HandleMovementAbility(Ability skill)
     {
         
 
-        if (skillSlots[0] != null)
+        if (skill != null)
         {
             // Apply skill effects
-            movementStats.sprintSpeed += skillSlots[0].sprintSpeedBaseIncrease;
-            movementStats.moveSpeed += skillSlots[0].walkSpeedBaseIncrease;
-            movementStats.moveSpeed *= skillSlots[0].walkSpeedMultiplier;
-            movementStats.sprintSpeed *= skillSlots[0].sprintSpeedMultiplier;
+            movementStats.sprintSpeed += skill.sprintSpeedBaseIncrease;
+            movementStats.moveSpeed += skill.walkSpeedBaseIncrease;
+            movementStats.moveSpeed *= skill.walkSpeedMultiplier;
+            movementStats.sprintSpeed *= skill.sprintSpeedMultiplier;
         }
     }
 
@@ -270,9 +317,16 @@ private void HandleMovementSkill(Ability skill)
         movementStats.moveSpeed -= skill.walkSpeedBaseIncrease;
         movementStats.sprintSpeed -= skill.sprintSpeedBaseIncrease;
     }
+
+    private void HandleDashSkill()
+    {
+        PlayerLocomotion.Instance.Dash();
+    }
      
     public void DeductSkillPoints(int cost)
     {
         skillPoints -= cost;
     }
+
+
 }

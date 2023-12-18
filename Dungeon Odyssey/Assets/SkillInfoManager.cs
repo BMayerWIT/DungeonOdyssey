@@ -8,6 +8,9 @@ using System.Linq;
 public class SkillInfoManager : MonoBehaviour
 {
     public static SkillInfoManager instance;
+
+    
+
     public Skill currentSkill;
     public Skill currentSkillToBeEquipped;
     public bool currentSkillIsUnlockable;
@@ -21,9 +24,16 @@ public class SkillInfoManager : MonoBehaviour
     public TextMeshProUGUI cooldownText;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI buttonText;
+    public GameObject[] EquippingUI;
+    public GameObject movementSkillTreeUI;
     public Image Slot1Image;
     public Image Slot2Image;
     public Image Slot3Image;
+    private Skill slot1Skill;
+    private Skill slot2Skill;
+    private Skill slot3Skill;
+    public Skill[] loadedSkills;
+    public bool equippingSkillFlag;
 
     private void Awake()
     {
@@ -33,9 +43,14 @@ public class SkillInfoManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        LoadEquippedSkillsOnSlots();
+    }
+
     private void Update()
     {
-
+        HandleSkillEquipUI(equippingSkillFlag);
         if (currentSkill != null)
         {
             if (currentSkill is Ability)
@@ -55,7 +70,7 @@ public class SkillInfoManager : MonoBehaviour
     {
         
         skillName.text = name;
-        descriptionText.text = "\"" + description + "\"";
+        descriptionText.text = description;
         durationText.text = "Duration: " + duration.ToString();
         cooldownText.text = "Cooldown: " + cooldown.ToString();
         costText.text = "Cost: " + cost.ToString();
@@ -97,22 +112,36 @@ public class SkillInfoManager : MonoBehaviour
 
     public void UnlockSkill()
     {
-        if (currentSkill.isUnlockable)
+        
+        
+        if (currentSkill.isUnlocked)
+        {
+
+            AudioManager.Instance.equipFlag = true;
+            equippingSkillFlag = true;
+        }
+        else
+        {
+            AudioManager.Instance.equipFlag = false;
+            equippingSkillFlag = false;
+        }
+
+        if (currentSkill.isUnlockable && !currentSkill.isUnlocked)
         {
             if (SkillManager.instance.skillPoints >= currentSkill.Cost)
             {
                 currentSkill.isUnlocked = true;
                 costText.enabled = false;
                 SkillManager.instance.DeductSkillPoints(currentSkill.Cost);
+                AudioManager.Instance.PlayUnlockSkillSound();
             }
         }
-        else if (currentSkill.isUnlockable)
+        else
         {
-            currentSkill.isUnlocked = true;
-            costText.enabled = false;
-            SkillManager.instance.DeductSkillPoints(currentSkill.Cost);
+            AudioManager.Instance.PlayButtonSound();
         }
-            
+
+
     }
 
     private string LoadEquipButtonText()
@@ -131,20 +160,104 @@ public class SkillInfoManager : MonoBehaviour
 
     public void EquipSlot1()
     {
-        SkillManager.instance.selectedSkills[0] = currentSkill;
-        Slot1Image.sprite = currentSkill.skillIcon;
+        if (equippingSkillFlag)
+        {
+            if (currentSkill != slot2Skill && currentSkill != slot3Skill)
+            {
+                slot1Skill = currentSkill;
+                SkillManager.instance.selectedSkills[0] = slot1Skill;
+                SaveAndLoad.instance.skillSlotData.savedSkills[0] = slot1Skill;
+                Slot1Image.sprite = slot1Skill.skillIcon;
+                equippingSkillFlag = false;
+                
+            }
+            else
+            {
+                equippingSkillFlag = false;
+                print("tried but failed which is good");
+            }
+        }
     }
     
     public void EquipSlot2()
     {
-        SkillManager.instance.selectedSkills[1] = currentSkill;
-        Slot2Image.sprite = currentSkill.skillIcon;
+        if (equippingSkillFlag)
+        { 
+            if (currentSkill != slot1Skill && currentSkill != slot3Skill)
+            {
+                slot2Skill = currentSkill;
+                SkillManager.instance.selectedSkills[1] = slot2Skill;
+                SaveAndLoad.instance.skillSlotData.savedSkills[1] = slot2Skill;
+                Slot2Image.sprite = slot2Skill.skillIcon;
+                equippingSkillFlag = false;
+                
+            }
+            else
+            {
+                equippingSkillFlag = false;
+                print("tried but failed which is good");
+            }
+        }
     }
     
     public void EquipSlot3()
     {
-        SkillManager.instance.selectedSkills[2] = currentSkill;
-        Slot3Image.sprite = currentSkill.skillIcon;
+        if (equippingSkillFlag)
+        {
+            if (currentSkill != slot1Skill && currentSkill != slot2Skill)
+            {
+                slot3Skill = currentSkill;
+                SkillManager.instance.selectedSkills[2] = slot3Skill;
+                SaveAndLoad.instance.skillSlotData.savedSkills[2] = slot3Skill;
+                Slot3Image.sprite = slot3Skill.skillIcon;
+                equippingSkillFlag = false;
+                
+            }
+            else
+            {
+                equippingSkillFlag = false;
+                print("tried but failed which is good");
+            }
+        }
+    }
+
+    private void LoadEquippedSkillsOnSlots()
+    {
+        loadedSkills = SaveAndLoad.instance.skillSlotData.savedSkills;
+
+        slot1Skill = loadedSkills[0];
+        slot2Skill = loadedSkills[1];
+        slot3Skill = loadedSkills[2];
+
+        Slot1Image.sprite = slot1Skill.skillIcon;
+        Slot2Image.sprite = slot2Skill.skillIcon;
+        Slot3Image.sprite = slot3Skill.skillIcon;
+
+    }
+
+
+
+    private void HandleSkillEquipUI(bool equipping)
+    {
+        if (equipping)
+        {
+            movementSkillTreeUI.SetActive(false);
+
+            for (int i = 0; i < EquippingUI.Count(); i++)
+            {
+                EquippingUI[i].SetActive(true);
+            }
+            
+            
+        }
+        else
+        {
+            movementSkillTreeUI.SetActive(true);
+            for (int i = 0; i < EquippingUI.Count(); i++)
+            {
+                EquippingUI[i].SetActive(false);
+            }
+        }
     }
 }
 

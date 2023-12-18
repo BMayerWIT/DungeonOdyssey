@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerLocomotion : MonoBehaviour
 {
+    public static PlayerLocomotion Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     [HideInInspector]
     public const float DEFAULT_MOVE_SPEED = 2f;
     [HideInInspector]
@@ -28,6 +38,11 @@ public class PlayerLocomotion : MonoBehaviour
     public float acceleration = 5.0f; // Acceleration rate
     public float deceleration = 5.0f; // Deceleration 
     public float currentSpeed = 0.0f; // Current character speed
+    public float currentStamina;
+
+    public float dashSpeed = 0.1f;
+
+    [SerializeField] private float dashDistance = 40f;
 
     public Transform orientation;
     private Vector2 inputVector;
@@ -38,10 +53,12 @@ public class PlayerLocomotion : MonoBehaviour
     public bool isPlayerGrounded;
     public bool isSprinting;
     [SerializeField] private CharacterController characterController;
+    public GameObject speedLines;
 
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
+       
     }
 
     private void Update()
@@ -57,7 +74,14 @@ public class PlayerLocomotion : MonoBehaviour
             Jump();
         //Crouch();
         IsWalking();
+        HandleSprinting();
         MovePlayer();
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            StartCoroutine(Dash());
+        }
+
+            
     }
 
     private void MovePlayer()
@@ -65,8 +89,7 @@ public class PlayerLocomotion : MonoBehaviour
         // Calculate movement direction
         moveDirection = orientation.forward * inputVector.y + orientation.right * inputVector.x;
 
-        // Determine if the player is sprinting
-        isSprinting = isPlayerGrounded && GameInput.inputInstance.IsSprinting() && !GameInput.inputInstance.IsCrouching();
+        
 
         // Calculate the horizontal speed based on sprinting state
         float targetSpeed = GetHorizontalSpeed(moveDirection, isSprinting);
@@ -98,6 +121,8 @@ public class PlayerLocomotion : MonoBehaviour
     private void Jump()
     {
         yVelocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+        StatsHandler.Instance.stamina -= 3f;
+        StatsHandler.Instance.timeSinceStaminaDrained = 0f;
     }
 
 
@@ -143,6 +168,41 @@ public class PlayerLocomotion : MonoBehaviour
         }
 
         return horizontalSpeed;
+    }
+
+    private void HandleSprinting()
+    {
+        currentStamina = StatsHandler.Instance.GetCurrentStamina();
+        if (GameInput.inputInstance.IsSprinting() && !GameInput.inputInstance.IsCrouching())
+        {
+            if (currentStamina > 0)
+            {
+                isSprinting = true;
+                StatsHandler.Instance.HandleSprintingDrain();
+            }
+            else
+            {
+                isSprinting = false;
+            }
+            
+        }
+        else
+        {
+            isSprinting = false;
+            StatsHandler.Instance.HandleSprintingRecharge();
+        }
+    }
+
+    public IEnumerator Dash()
+    {
+        print("dashing");
+        speedLines.SetActive(true);
+        for (int i = 0; i < dashDistance; i++)
+        {
+            yield return new WaitForSeconds(dashSpeed);
+            characterController.Move(moveDirection * i * Time.deltaTime);
+        }
+        speedLines.SetActive(false);
     }
 
     public void DefaultMovementStats()

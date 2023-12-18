@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Security.Principal;
 using System.Xml.XPath;
 using TMPro;
 using UnityEngine;
@@ -14,18 +16,35 @@ public class StatsHandler : MonoBehaviour
     public int healthLevel = 10;
     public int maxHealth;
     public int currentHealth;
+
     [Header("Stamina")]
+    public float maxStamina = 20f;
+    public float staminaRechargeDelay = 10f; // Delay before stamina starts recharging
+    public float staminaRechargeRate = 2f;  // Rate at which stamina recharges
+    public float staminaDrainRate = 2f;
+    public float stamina;
+    public float timeSinceStaminaDrained;
 
     [Header("XP")]
     public int currentPlayerLevel = 1;
     public int xpToLevelUp = 0;
     public int currentXP;
+    public float xpFillRate = 0.1f;
 
     
 
     public HealthBar healthBar;
     public XPBar xpBar;
+    public StaminaBar staminaBar;
     public TextMeshProUGUI currentLevelText;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {
@@ -34,7 +53,9 @@ public class StatsHandler : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
 
-       
+        stamina = maxStamina;
+        staminaBar.SetMaxStamina(maxStamina);
+
         currentLevelText.SetText("" + currentPlayerLevel);
 
     }
@@ -45,8 +66,11 @@ public class StatsHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             
-            AddXP(10);
+           StartCoroutine(AddXP(10));
         }
+        staminaBar.SetCurrentStamina(stamina);
+        timeSinceStaminaDrained += Time.deltaTime;
+        
     }
 
     private int SetMaxHealthFromHealthLevel()
@@ -75,10 +99,21 @@ public class StatsHandler : MonoBehaviour
         }
     }
 
-    public void AddXP(int xpAmount)
+    public IEnumerator AddXP(int xpAmount)
     {
-        currentXP += xpAmount;
-        xpBar.SetCurrentXP(currentXP);
+        float xpToAdd = 0;
+        print("Working");
+        while (xpToAdd <= xpAmount)
+        {
+            
+            currentXP++;
+            xpToAdd++;
+            xpBar.SetCurrentXP(currentXP);
+            yield return new WaitForSeconds(xpFillRate);
+        }
+        
+        
+        
     }
 
     public void TakeDamage(int damage)
@@ -86,6 +121,36 @@ public class StatsHandler : MonoBehaviour
         currentHealth -= damage;
 
         healthBar.SetCurrentHealth(currentHealth);
+    }
+
+
+    public void HandleSprintingDrain()
+    {
+
+
+        if (stamina > 0f)
+        {
+
+            stamina -= Time.deltaTime * staminaDrainRate;
+            timeSinceStaminaDrained = 0f;
+        }
+        
+    }
+
+    public void HandleSprintingRecharge()
+    {
+        
+        staminaBar.SetCurrentStamina(stamina);
+        if (stamina < maxStamina && timeSinceStaminaDrained > staminaRechargeDelay)
+        {
+            stamina += staminaRechargeRate * Time.deltaTime;
+            stamina = Mathf.Clamp(stamina, 0f, maxStamina);
+        }
+    }
+
+    public float GetCurrentStamina()
+    {
+        return stamina;
     }
 
     private void GameOver()

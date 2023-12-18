@@ -188,6 +188,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AddXP"",
+                    ""type"": ""Button"",
+                    ""id"": ""5bb4205f-fa8c-42d5-8748-9dc127fff5d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -487,6 +496,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""UseSkill3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""618eb018-bf8c-4f8d-aaff-d5a36de4b3d2"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AddXP"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -513,6 +533,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_UseSkill1 = m_Player.FindAction("UseSkill1", throwIfNotFound: true);
         m_Player_UseSkill2 = m_Player.FindAction("UseSkill2", throwIfNotFound: true);
         m_Player_UseSkill3 = m_Player.FindAction("UseSkill3", throwIfNotFound: true);
+        m_Player_AddXP = m_Player.FindAction("AddXP", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -590,6 +611,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_UseSkill1;
     private readonly InputAction m_Player_UseSkill2;
     private readonly InputAction m_Player_UseSkill3;
+    private readonly InputAction m_Player_AddXP;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -612,6 +634,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @UseSkill1 => m_Wrapper.m_Player_UseSkill1;
         public InputAction @UseSkill2 => m_Wrapper.m_Player_UseSkill2;
         public InputAction @UseSkill3 => m_Wrapper.m_Player_UseSkill3;
+        public InputAction @AddXP => m_Wrapper.m_Player_AddXP;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -675,6 +698,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @UseSkill3.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill3;
                 @UseSkill3.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill3;
                 @UseSkill3.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill3;
+                @AddXP.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAddXP;
+                @AddXP.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAddXP;
+                @AddXP.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAddXP;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -733,6 +759,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @UseSkill3.started += instance.OnUseSkill3;
                 @UseSkill3.performed += instance.OnUseSkill3;
                 @UseSkill3.canceled += instance.OnUseSkill3;
+                @AddXP.started += instance.OnAddXP;
+                @AddXP.performed += instance.OnAddXP;
+                @AddXP.canceled += instance.OnAddXP;
             }
         }
     }
@@ -757,5 +786,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnUseSkill1(InputAction.CallbackContext context);
         void OnUseSkill2(InputAction.CallbackContext context);
         void OnUseSkill3(InputAction.CallbackContext context);
+        void OnAddXP(InputAction.CallbackContext context);
     }
 }

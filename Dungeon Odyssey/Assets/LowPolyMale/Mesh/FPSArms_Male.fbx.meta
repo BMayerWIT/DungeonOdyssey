@@ -1,151 +1,437 @@
 fileFormatVersion: 2
 guid: 298acbef56830444a8f38d0763b7f8e6
 ModelImporter:
-  serializedVersion: 22
-  fileIDToRecycleName:
-    100000: Arm.L
-    100002: Arm.R
-    100004: Armature
-    100006: BaseMesh
-    100008: body.arms
-    100010: body.forearms
-    100012: body.hands
-    100014: bodyArmour.gloves
-    100016: bodyArmour.torso
-    100018: Forearm.L
-    100020: Forearm.R
-    100022: //RootNode
-    100024: gloves
-    100026: gloves.2
-    100028: Hand.L
-    100030: Hand.R
-    100032: hoodie
-    100034: hoodie.2
-    100036: Ind1.L
-    100038: Ind1.R
-    100040: Ind2.L
-    100042: Ind2.R
-    100044: Ind3.L
-    100046: Ind3.L_end
-    100048: Ind3.R
-    100050: Ind3.R_end
-    100052: jacket
-    100054: jumper
-    100056: jumper.2
-    100058: jumper.3
-    100060: Mid1.L
-    100062: Mid1.R
-    100064: Mid2.L
-    100066: Mid2.R
-    100068: Mid3.L
-    100070: Mid3.L_end
-    100072: Mid3.R
-    100074: Mid3.R_end
-    100076: radiationSuit
-    100078: Shoulder.L
-    100080: Shoulder.R
-    100082: Thum1.L
-    100084: Thum1.R
-    100086: Thumb2.L
-    100088: Thumb2.R
-    100090: Thumb3.L
-    100092: Thumb3.L_end
-    100094: Thumb3.R
-    100096: Thumb3.R_end
-    100098: tshirt
-    100100: tshirt.2
-    100102: tshirt.3
-    400000: Arm.L
-    400002: Arm.R
-    400004: Armature
-    400006: BaseMesh
-    400008: body.arms
-    400010: body.forearms
-    400012: body.hands
-    400014: bodyArmour.gloves
-    400016: bodyArmour.torso
-    400018: Forearm.L
-    400020: Forearm.R
-    400022: //RootNode
-    400024: gloves
-    400026: gloves.2
-    400028: Hand.L
-    400030: Hand.R
-    400032: hoodie
-    400034: hoodie.2
-    400036: Ind1.L
-    400038: Ind1.R
-    400040: Ind2.L
-    400042: Ind2.R
-    400044: Ind3.L
-    400046: Ind3.L_end
-    400048: Ind3.R
-    400050: Ind3.R_end
-    400052: jacket
-    400054: jumper
-    400056: jumper.2
-    400058: jumper.3
-    400060: Mid1.L
-    400062: Mid1.R
-    400064: Mid2.L
-    400066: Mid2.R
-    400068: Mid3.L
-    400070: Mid3.L_end
-    400072: Mid3.R
-    400074: Mid3.R_end
-    400076: radiationSuit
-    400078: Shoulder.L
-    400080: Shoulder.R
-    400082: Thum1.L
-    400084: Thum1.R
-    400086: Thumb2.L
-    400088: Thumb2.R
-    400090: Thumb3.L
-    400092: Thumb3.L_end
-    400094: Thumb3.R
-    400096: Thumb3.R_end
-    400098: tshirt
-    400100: tshirt.2
-    400102: tshirt.3
-    2100000: Attire
-    2100002: Body
-    4300000: radiationSuit
-    4300002: jumper.3
-    4300004: tshirt.3
-    4300006: tshirt.2
-    4300008: bodyArmour.gloves
-    4300010: bodyArmour.torso
-    4300012: body.hands
-    4300014: body.forearms
-    4300016: body.arms
-    4300018: hoodie
-    4300020: hoodie.2
-    4300022: jumper.2
-    4300024: gloves.2
-    4300026: jacket
-    4300028: tshirt
-    4300030: gloves
-    4300032: jumper
-    4300034: BaseMesh
-    9500000: //RootNode
-    13700000: BaseMesh
-    13700002: body.arms
-    13700004: body.forearms
-    13700006: body.hands
-    13700008: bodyArmour.gloves
-    13700010: bodyArmour.torso
-    13700012: gloves
-    13700014: gloves.2
-    13700016: hoodie
-    13700018: hoodie.2
-    13700020: jacket
-    13700022: jumper
-    13700024: jumper.2
-    13700026: jumper.3
-    13700028: radiationSuit
-    13700030: tshirt
-    13700032: tshirt.2
-    13700034: tshirt.3
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Arm.L
+  - first:
+      1: 100002
+    second: Arm.R
+  - first:
+      1: 100004
+    second: Armature
+  - first:
+      1: 100006
+    second: BaseMesh
+  - first:
+      1: 100008
+    second: body.arms
+  - first:
+      1: 100010
+    second: body.forearms
+  - first:
+      1: 100012
+    second: body.hands
+  - first:
+      1: 100014
+    second: bodyArmour.gloves
+  - first:
+      1: 100016
+    second: bodyArmour.torso
+  - first:
+      1: 100018
+    second: Forearm.L
+  - first:
+      1: 100020
+    second: Forearm.R
+  - first:
+      1: 100022
+    second: //RootNode
+  - first:
+      1: 100024
+    second: gloves
+  - first:
+      1: 100026
+    second: gloves.2
+  - first:
+      1: 100028
+    second: Hand.L
+  - first:
+      1: 100030
+    second: Hand.R
+  - first:
+      1: 100032
+    second: hoodie
+  - first:
+      1: 100034
+    second: hoodie.2
+  - first:
+      1: 100036
+    second: Ind1.L
+  - first:
+      1: 100038
+    second: Ind1.R
+  - first:
+      1: 100040
+    second: Ind2.L
+  - first:
+      1: 100042
+    second: Ind2.R
+  - first:
+      1: 100044
+    second: Ind3.L
+  - first:
+      1: 100046
+    second: Ind3.L_end
+  - first:
+      1: 100048
+    second: Ind3.R
+  - first:
+      1: 100050
+    second: Ind3.R_end
+  - first:
+      1: 100052
+    second: jacket
+  - first:
+      1: 100054
+    second: jumper
+  - first:
+      1: 100056
+    second: jumper.2
+  - first:
+      1: 100058
+    second: jumper.3
+  - first:
+      1: 100060
+    second: Mid1.L
+  - first:
+      1: 100062
+    second: Mid1.R
+  - first:
+      1: 100064
+    second: Mid2.L
+  - first:
+      1: 100066
+    second: Mid2.R
+  - first:
+      1: 100068
+    second: Mid3.L
+  - first:
+      1: 100070
+    second: Mid3.L_end
+  - first:
+      1: 100072
+    second: Mid3.R
+  - first:
+      1: 100074
+    second: Mid3.R_end
+  - first:
+      1: 100076
+    second: radiationSuit
+  - first:
+      1: 100078
+    second: Shoulder.L
+  - first:
+      1: 100080
+    second: Shoulder.R
+  - first:
+      1: 100082
+    second: Thum1.L
+  - first:
+      1: 100084
+    second: Thum1.R
+  - first:
+      1: 100086
+    second: Thumb2.L
+  - first:
+      1: 100088
+    second: Thumb2.R
+  - first:
+      1: 100090
+    second: Thumb3.L
+  - first:
+      1: 100092
+    second: Thumb3.L_end
+  - first:
+      1: 100094
+    second: Thumb3.R
+  - first:
+      1: 100096
+    second: Thumb3.R_end
+  - first:
+      1: 100098
+    second: tshirt
+  - first:
+      1: 100100
+    second: tshirt.2
+  - first:
+      1: 100102
+    second: tshirt.3
+  - first:
+      4: 400000
+    second: Arm.L
+  - first:
+      4: 400002
+    second: Arm.R
+  - first:
+      4: 400004
+    second: Armature
+  - first:
+      4: 400006
+    second: BaseMesh
+  - first:
+      4: 400008
+    second: body.arms
+  - first:
+      4: 400010
+    second: body.forearms
+  - first:
+      4: 400012
+    second: body.hands
+  - first:
+      4: 400014
+    second: bodyArmour.gloves
+  - first:
+      4: 400016
+    second: bodyArmour.torso
+  - first:
+      4: 400018
+    second: Forearm.L
+  - first:
+      4: 400020
+    second: Forearm.R
+  - first:
+      4: 400022
+    second: //RootNode
+  - first:
+      4: 400024
+    second: gloves
+  - first:
+      4: 400026
+    second: gloves.2
+  - first:
+      4: 400028
+    second: Hand.L
+  - first:
+      4: 400030
+    second: Hand.R
+  - first:
+      4: 400032
+    second: hoodie
+  - first:
+      4: 400034
+    second: hoodie.2
+  - first:
+      4: 400036
+    second: Ind1.L
+  - first:
+      4: 400038
+    second: Ind1.R
+  - first:
+      4: 400040
+    second: Ind2.L
+  - first:
+      4: 400042
+    second: Ind2.R
+  - first:
+      4: 400044
+    second: Ind3.L
+  - first:
+      4: 400046
+    second: Ind3.L_end
+  - first:
+      4: 400048
+    second: Ind3.R
+  - first:
+      4: 400050
+    second: Ind3.R_end
+  - first:
+      4: 400052
+    second: jacket
+  - first:
+      4: 400054
+    second: jumper
+  - first:
+      4: 400056
+    second: jumper.2
+  - first:
+      4: 400058
+    second: jumper.3
+  - first:
+      4: 400060
+    second: Mid1.L
+  - first:
+      4: 400062
+    second: Mid1.R
+  - first:
+      4: 400064
+    second: Mid2.L
+  - first:
+      4: 400066
+    second: Mid2.R
+  - first:
+      4: 400068
+    second: Mid3.L
+  - first:
+      4: 400070
+    second: Mid3.L_end
+  - first:
+      4: 400072
+    second: Mid3.R
+  - first:
+      4: 400074
+    second: Mid3.R_end
+  - first:
+      4: 400076
+    second: radiationSuit
+  - first:
+      4: 400078
+    second: Shoulder.L
+  - first:
+      4: 400080
+    second: Shoulder.R
+  - first:
+      4: 400082
+    second: Thum1.L
+  - first:
+      4: 400084
+    second: Thum1.R
+  - first:
+      4: 400086
+    second: Thumb2.L
+  - first:
+      4: 400088
+    second: Thumb2.R
+  - first:
+      4: 400090
+    second: Thumb3.L
+  - first:
+      4: 400092
+    second: Thumb3.L_end
+  - first:
+      4: 400094
+    second: Thumb3.R
+  - first:
+      4: 400096
+    second: Thumb3.R_end
+  - first:
+      4: 400098
+    second: tshirt
+  - first:
+      4: 400100
+    second: tshirt.2
+  - first:
+      4: 400102
+    second: tshirt.3
+  - first:
+      21: 2100000
+    second: Attire
+  - first:
+      21: 2100002
+    second: Body
+  - first:
+      43: 4300000
+    second: radiationSuit
+  - first:
+      43: 4300002
+    second: jumper.3
+  - first:
+      43: 4300004
+    second: tshirt.3
+  - first:
+      43: 4300006
+    second: tshirt.2
+  - first:
+      43: 4300008
+    second: bodyArmour.gloves
+  - first:
+      43: 4300010
+    second: bodyArmour.torso
+  - first:
+      43: 4300012
+    second: body.hands
+  - first:
+      43: 4300014
+    second: body.forearms
+  - first:
+      43: 4300016
+    second: body.arms
+  - first:
+      43: 4300018
+    second: hoodie
+  - first:
+      43: 4300020
+    second: hoodie.2
+  - first:
+      43: 4300022
+    second: jumper.2
+  - first:
+      43: 4300024
+    second: gloves.2
+  - first:
+      43: 4300026
+    second: jacket
+  - first:
+      43: 4300028
+    second: tshirt
+  - first:
+      43: 4300030
+    second: gloves
+  - first:
+      43: 4300032
+    second: jumper
+  - first:
+      43: 4300034
+    second: BaseMesh
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: BaseMesh
+  - first:
+      137: 13700002
+    second: body.arms
+  - first:
+      137: 13700004
+    second: body.forearms
+  - first:
+      137: 13700006
+    second: body.hands
+  - first:
+      137: 13700008
+    second: bodyArmour.gloves
+  - first:
+      137: 13700010
+    second: bodyArmour.torso
+  - first:
+      137: 13700012
+    second: gloves
+  - first:
+      137: 13700014
+    second: gloves.2
+  - first:
+      137: 13700016
+    second: hoodie
+  - first:
+      137: 13700018
+    second: hoodie.2
+  - first:
+      137: 13700020
+    second: jacket
+  - first:
+      137: 13700022
+    second: jumper
+  - first:
+      137: 13700024
+    second: jumper.2
+  - first:
+      137: 13700026
+    second: jumper.3
+  - first:
+      137: 13700028
+    second: radiationSuit
+  - first:
+      137: 13700030
+    second: tshirt
+  - first:
+      137: 13700032
+    second: tshirt.2
+  - first:
+      137: 13700034
+    second: tshirt.3
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -158,7 +444,7 @@ ModelImporter:
       name: Body
     second: {fileID: 2100000, guid: b4d8fc3b719535a4195d3e8a9bd3dfea, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -167,6 +453,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -175,6 +462,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -189,21 +477,33 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
@@ -211,10 +511,13 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -224,14 +527,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
