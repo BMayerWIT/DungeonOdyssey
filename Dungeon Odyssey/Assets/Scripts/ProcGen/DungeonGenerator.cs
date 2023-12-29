@@ -6,8 +6,10 @@ using Unity.VisualScripting;
 
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using static UnityEngine.UI.Image;
+
+public enum DungeonState { inactive, generatingMain, generatingBranches, cleanup, completed }
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -34,8 +36,9 @@ public class DungeonGenerator : MonoBehaviour
     [Range(0,1)] public float constructionDelay;
 
     [Header("Available At Runtime")]
+    [HideInInspector] public DungeonState dungeonState = DungeonState.inactive;
     public List<Tile> generatedTiles = new List<Tile>();
-
+    
 
     private GameObject goCamera, goPlayer;
     private List<Connector> availableConnectors = new List<Connector>();
@@ -75,19 +78,24 @@ public class DungeonGenerator : MonoBehaviour
         tileRoot = CreateStartTile();
         tileTo = tileRoot;
         DebugRoomLighting(tileRoot, Color.cyan);
-        for (int i = 0; i < mainLength - 1; i++)
+        dungeonState = DungeonState.generatingMain;
+        while (generatedTiles.Count < mainLength)
         {
             yield return new WaitForSeconds(constructionDelay);
             tileFrom = tileTo;
-            tileTo = CreateTile();
-            DebugRoomLighting(tileTo, Color.red);
+            if (generatedTiles.Count == mainLength - 1)
+            {
+                tileTo = CreateExitTile();
+            }
+            else
+            {
+                tileTo = CreateTile();
+                DebugRoomLighting(tileTo, Color.red);
+            }
+            
             ConnectTiles();
             CollisionCheck();
-            if (attempts >= maxAttempts)
-            {
-                attempts = 0;
-                break;
-            }
+           
         }
 
         // Get all connectors within main path container that are NOT already connected
@@ -103,6 +111,7 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
         // Branching
+        dungeonState = DungeonState.generatingBranches;
         for (int b = 0; b < numberOfBranches; b++)
         {
             if (availableConnectors.Count > 0)
@@ -124,17 +133,65 @@ public class DungeonGenerator : MonoBehaviour
                     CollisionCheck();
                     if (attempts >= maxAttempts)
                     {
-                        attempts = 0;
                         break;
                     }
                 }
             }
             else { break; }
         }
+        dungeonState = DungeonState.cleanup;
         LightRestoration();
         CleanUpBoxes();
+        BlockedPassages();
+        SpawnDoors();
+        dungeonState = DungeonState.completed;
+        yield return null;
         goCamera.SetActive(false);
         goPlayer.SetActive(true);
+    }
+
+    private void SpawnDoors()
+    {
+        if (doorSpawnPercent > 0)
+        {
+            Connector[] allConnectors = transform.GetComponentsInChildren<Connector>();
+            for (int i = 0; i < allConnectors.Length; i++)
+            {
+                Connector myConnector = allConnectors[i];
+                if (myConnector.isConnected)
+                {
+                    // Random chance of spawning a door
+                    int roll = Random.Range(1, 101);
+                    if (roll <= doorSpawnPercent)
+                    {
+                        Vector3 halfExtents = new Vector3(myConnector.size.x, 1f, myConnector.size.x);
+                        Vector3 pos = myConnector.transform.position;
+                        Vector3 offset = Vector3.up * 0.5f;
+                        Collider[] hits = Physics.OverlapBox(pos + offset, halfExtents, Quaternion.identity, LayerMask.GetMask("Door"));
+                        if (hits.Length == 0)
+                        {
+                            int doorIndex = Random.Range(0, doorPrefabs.Length);
+                            GameObject gameObjectDoor = Instantiate(doorPrefabs[doorIndex], pos, myConnector.transform.rotation, myConnector.transform) as GameObject;
+                            gameObjectDoor.name = doorPrefabs[doorIndex].name;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void BlockedPassages()
+    {
+        foreach( Connector  connector in transform.GetComponentsInChildren<Connector>())
+        {
+            if (!connector.isConnected)
+            {
+                Vector3 pos = connector.transform.position;
+                int wallIndex = Random.Range(0, blockedPrefabs.Length);
+                GameObject gameObjectWall = Instantiate(blockedPrefabs[wallIndex], pos, connector.transform.rotation, connector.transform) as GameObject;
+                gameObject.name = blockedPrefabs[wallIndex].name;
+            }
+        }
     }
 
     private void CollisionCheck()
@@ -150,7 +207,7 @@ public class DungeonGenerator : MonoBehaviour
             {
                 // Hit something other than tileTo or tileFrom
                 attempts++;
-                Debug.Log(attempts);
+                //Debug.Log(attempts);
                 int toIndex = generatedTiles.FindIndex(x => x.tile == tileTo);
                 if (generatedTiles[toIndex].connector != null)
                 {
@@ -158,68 +215,85 @@ public class DungeonGenerator : MonoBehaviour
                 }
                 generatedTiles.RemoveAt(toIndex);
                 DestroyImmediate(tileTo.gameObject);
-                
-                //// Backtracking
-                //if (attempts == maxAttempts)
-                //{
-                //    int fromIndex = generatedTiles.FindIndex(x => x.tile == tileFrom);
-                //    Tile myTileFrom = generatedTiles[fromIndex];
-                //    if (tileFrom != tileRoot) // If Tilefrom is not the root of a branch
-                //    {
-                //        if (myTileFrom.connector != null) // if newly generated tile from tilefrom contains a connector
-                //        {
-                //            myTileFrom.connector.isConnected = false; // set connector isconnected to false (is able to be connected to a different tile)
-                //        }
-                //        availableConnectors.RemoveAll(x => x.transform.parent.parent == tileFrom); // remove all connectors in the tile branching from, from the connectors list
-                //        generatedTiles.RemoveAt(fromIndex); // remove tile at the index of the tile from
-                //        DestroyImmediate(tileFrom.gameObject); // immediately destroy it
-                //        // End 1st if (tileFrom is null)
 
-                //        if (myTileFrom.origin != tileRoot) // if newly generated tile origin (its tile from) isnt the root of the branch
-                //        {
-                //            tileFrom = myTileFrom.origin; // tile from is set to that piece. ie. if its not the root its set back 
-                //        }
-                //        else if (container.name.Contains("Main"))
-                //        {
-                //            if (myTileFrom.origin != null)
-                //            {
-                //                tileRoot = myTileFrom.origin;
-                //                tileFrom = tileRoot;
-                //            }
-                //        }
-                //        else if (availableConnectors.Count > 0)
-                //        {
-                //            int availableIndex = Random.Range(0, availableConnectors.Count);
-                //            tileRoot = availableConnectors[availableIndex].transform.parent.parent;
-                //            availableConnectors.RemoveAt(availableIndex);
-                //            tileFrom = tileRoot;
-                //        }
-                //        else { return; }
+                // Backtracking
+                if (attempts == maxAttempts)
+                {
+                    int fromIndex = generatedTiles.FindIndex(x => x.tile == tileFrom);
+                    Tile myTileFrom = null;
+                    if (fromIndex != -1)
+                    {
+                        myTileFrom = generatedTiles[fromIndex];
+                    }
+                    else
+                    {
+                        print("index was -1");
+                    }
+                    
+                    if (tileFrom != tileRoot) // If Tilefrom is not the root of a branch
+                    {
+                        if (myTileFrom.connector != null) // if newly generated tile from tilefrom contains a connector
+                        {
+                            myTileFrom.connector.isConnected = false; // set connector isconnected to false (is able to be connected to a different tile)
+                        }
+                        availableConnectors.RemoveAll(x => x.transform.parent.parent == tileFrom); // remove all connectors in the tile branching from, from the connectors list
+                        generatedTiles.RemoveAt(fromIndex); // remove tile at the index of the tile from
+                        DestroyImmediate(tileFrom.gameObject); // immediately destroy it
+                        // End 1st if (tileFrom is null)
 
-                //    }
-                //    else if (container.name.Contains("Main"))
-                //    {
-                //        if (myTileFrom.origin != null)
-                //        {
-                //            tileRoot = myTileFrom.origin;
-                //            tileFrom = tileRoot;
-                //        }
-                //    }
-                //    else if (availableConnectors.Count > 0)
-                //    {
-                //        int availableIndex = Random.Range(0, availableConnectors.Count);
-                //        tileRoot = availableConnectors[availableIndex].transform.parent.parent;
-                //        availableConnectors.RemoveAt(availableIndex);
-                //        tileFrom = tileRoot;
-                //    }
-                //    else { return; }
-               // }
-                // Retry
+                        if (myTileFrom.origin != tileRoot) // if newly generated tile origin (its tile from) isnt the root of the branch
+                        {
+                            tileFrom = myTileFrom.origin; // tile from is set to that piece. ie. if its not the root its set back 
+                        }
+                        else if (container.name.Contains("Main"))
+                        {
+                            if (myTileFrom.origin != null)
+                            {
+                                tileRoot = myTileFrom.origin;
+                                tileFrom = tileRoot;
+                            }
+                        }
+                        else if (availableConnectors.Count > 0)
+                        {
+                            int availableIndex = Random.Range(0, availableConnectors.Count);
+                            tileRoot = availableConnectors[availableIndex].transform.parent.parent;
+                            availableConnectors.RemoveAt(availableIndex);
+                            tileFrom = tileRoot;
+                        }
+                        else { return; }
+
+                    }
+                    else if (container.name.Contains("Main"))
+                    {
+                        if (myTileFrom.origin != null)
+                        {
+                            tileRoot = myTileFrom.origin;
+                            tileFrom = tileRoot;
+                        }
+                    }
+                    else if (availableConnectors.Count > 0)
+                    {
+                        int availableIndex = Random.Range(0, availableConnectors.Count);
+                        tileRoot = availableConnectors[availableIndex].transform.parent.parent;
+                        availableConnectors.RemoveAt(availableIndex);
+                        tileFrom = tileRoot;
+                    }
+                    else { return; }
+                }
+                //Retry
                 if (tileFrom != null)
                 {
-                    tileTo = CreateTile();
-                    Color retryColor = container.name.Contains("Branch") ? Color.green : Color.yellow;
-                    DebugRoomLighting(tileTo, retryColor * 2);
+                    if (generatedTiles.Count == mainLength - 1)
+                    {
+                        tileTo = CreateExitTile();
+                    }
+                    else
+                    {
+                        tileTo = CreateTile();
+                        Color retryColor = container.name.Contains("Branch") ? Color.green : Color.yellow;
+                        DebugRoomLighting(tileTo, retryColor * 2);
+                    }
+                    
                     ConnectTiles();
                     CollisionCheck();
                 }
@@ -346,7 +420,31 @@ public class DungeonGenerator : MonoBehaviour
         else
         {
             // Handle the case when the tile corresponding to tileFrom is not found
-            Debug.LogError("Tile corresponding to tileFrom not found!");
+            //Debug.LogError("Tile corresponding to tileFrom not found!");
+            // You may choose to return null or handle the situation differently based on your needs
+            generatedTiles.Add(new Tile(objectTile.transform, null));
+            return objectTile.transform;
+        }
+    }
+
+    private Transform CreateExitTile()
+    {
+        int index = Random.Range(0, exitPrefabs.Length);
+        GameObject objectTile = Instantiate(exitPrefabs[index], Vector3.zero, Quaternion.identity, container) as GameObject;
+        objectTile.name = "Exit Room";
+        int tileFromIndex = generatedTiles.FindIndex(x => x.tile == tileFrom);
+
+        // Check if the index is valid
+        if (tileFromIndex != -1)
+        {
+            Transform origin = generatedTiles[tileFromIndex].tile;
+            generatedTiles.Add(new Tile(objectTile.transform, origin));
+            return objectTile.transform;
+        }
+        else
+        {
+            // Handle the case when the tile corresponding to tileFrom is not found
+            //Debug.LogError("Tile corresponding to tileFrom not found!");
             // You may choose to return null or handle the situation differently based on your needs
             generatedTiles.Add(new Tile(objectTile.transform, null));
             return objectTile.transform;

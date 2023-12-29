@@ -78,15 +78,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ToggleCamera",
-                    "type": "Button",
-                    "id": "7585e6d4-c367-4e46-8e6e-f48302a24b08",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "DecreaseHealth",
                     "type": "Button",
                     "id": "f1a21864-7036-4900-84e4-74501f9f04c7",
@@ -103,24 +94,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Dash",
-                    "type": "Button",
-                    "id": "a8dd1c8a-ce7e-48a6-a1f1-1e1386040226",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "HeavyAttack",
-                    "type": "Button",
-                    "id": "c1ebc928-25df-45d7-a994-b2eda1982690",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "Pause",
@@ -367,17 +340,6 @@
                 },
                 {
                     "name": "",
-                    "id": "400eec5d-f9ce-4df0-94ec-4a97ecac91a7",
-                    "path": "<Keyboard>/g",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ToggleCamera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9f991ffd-fd0a-49f5-b1c6-1e0a9bfd3fec",
                     "path": "<Keyboard>/h",
                     "interactions": "",
@@ -395,28 +357,6 @@
                     "processors": "NormalizeVector2",
                     "groups": "",
                     "action": "Camera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8128f782-1c97-4f96-9bc3-8707701e5e04",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f34faf35-cdbc-4eb9-ad5e-11e38690dc7d",
-                    "path": "<Keyboard>/equals",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "HeavyAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

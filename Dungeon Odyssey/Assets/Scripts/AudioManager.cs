@@ -14,6 +14,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip equipSkill;
     public AudioClip unlockSkill;
     public AudioClip mainMenuMusic;
+    public AudioClip[] welcomeLines;
+    public AudioClip[] startBuyingLines;
+    public AudioClip[] goodbyeLines;
+    public AudioClip healthPotionCollect;
 
     public bool equipFlag;
 
@@ -86,5 +90,34 @@ public class AudioManager : MonoBehaviour
         musicAudioSource.clip = mainMenuMusic;
         musicAudioSource.volume = musicVolume;
         musicAudioSource.Play();
+    }
+
+    public void PlayRandomShopWelcome()
+    {
+        int randomIndex = Random.Range(0, welcomeLines.Length);
+
+        // Play the audio clip at the random index
+        masterAudioSource.PlayOneShot(welcomeLines[randomIndex]);
+    }
+
+    public void PlayRandomStartBuying()
+    {
+        int randomIndex = Random.Range(0, startBuyingLines.Length);
+
+        // Play the audio clip at the random index
+        masterAudioSource.PlayOneShot(startBuyingLines[randomIndex]);
+    }
+
+    public void PlayRandomGoodbye() 
+    {
+        int randomIndex = Random.Range(0, goodbyeLines.Length);
+
+        // Play the audio clip at the random index
+        masterAudioSource.PlayOneShot(goodbyeLines[randomIndex]);
+    }
+
+    public void PlayHealthPotionCollect()
+    {
+        masterAudioSource.PlayOneShot(healthPotionCollect);
     }
 }

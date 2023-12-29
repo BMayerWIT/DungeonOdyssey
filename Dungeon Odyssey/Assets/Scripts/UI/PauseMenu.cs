@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool isPaused = false;
+    public static bool paused = false;
     public GameObject HUD;
 
     [Header("Menus which must be hidden after game is unpaused")]
@@ -22,17 +22,21 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+
+        //if (Input.GetKeyDown(KeyCode.P))
         if (GameInput.inputInstance.ReturnPauseState())
         {
-            if (isPaused)
-            {
-                Resume();
-            }
-            else
+            print("pressed pause");
+            if (!paused)
             {
                 Pause();
             }
+            else
+            {
+                Resume();
+            }
         }
+    
     }
 
     public void Resume()
@@ -42,20 +46,22 @@ public class PauseMenu : MonoBehaviour
             menuList[i].SetActive(false);
         }
         Time.timeScale = 1f;
-        isPaused = false;
+        paused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         HUD.SetActive(true);
+        
     }
 
     void Pause()
     {
         menuList[0].SetActive(true);
         Time.timeScale = 0f;
-        isPaused = true;
+        paused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         HUD.SetActive(false);
+        
         
     }
 

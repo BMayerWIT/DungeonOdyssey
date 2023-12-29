@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2882360603441454731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2882360603441454741}
+  - component: {fileID: 2882360603441454730}
+  m_Layer: 0
+  m_Name: SkillManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2882360603441454741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882360603441454731}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 418.53943, y: 558.1934, z: -5.302856}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2882360603441454730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882360603441454731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9516e92ba3f29cc40b11de2dbf3df8ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillPoints: 5
+  selectedSkills: []
+  skillSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  skillSpriteOutlines:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  skillSliders:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  skillBindingText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  cooldown1: 0
+  cooldown2: 0
+  cooldown3: 0
+  abilitySlot1: {fileID: 0}
+  abilitySlot2: {fileID: 0}
+  abilitySlot3: {fileID: 0}
+  movementSkillSlot1: {fileID: 0}
+  movementSkillSlot2: {fileID: 0}
+  movementSkillSlot3: {fileID: 0}

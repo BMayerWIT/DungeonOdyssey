@@ -70,6 +70,11 @@ public class StatsHandler : MonoBehaviour
         }
         staminaBar.SetCurrentStamina(stamina);
         timeSinceStaminaDrained += Time.deltaTime;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        healthBar.SetCurrentHealth(currentHealth);
         
     }
 
@@ -114,6 +119,11 @@ public class StatsHandler : MonoBehaviour
         
         
         
+    }
+
+    public void XPAdder(int xp)
+    {
+        StartCoroutine(AddXP(xp));
     }
 
     public void TakeDamage(int damage)

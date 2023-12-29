@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SkillSlotData
   m_EditorClassIdentifier: 
   savedSkills:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 85542224676b41b45b9009f8e9c4c0c0, type: 2}
+  - {fileID: 11400000, guid: 64637c5babc1ccb4585a0aeebdfa7354, type: 2}
+  - {fileID: 11400000, guid: 64637c5babc1ccb4585a0aeebdfa7354, type: 2}

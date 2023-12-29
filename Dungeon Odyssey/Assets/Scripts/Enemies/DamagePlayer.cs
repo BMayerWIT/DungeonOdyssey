@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamagePlayer : MonoBehaviour
 {
-    public int damage = 25;
+    public int damage = 10;
     private void OnTriggerEnter(Collider other)
     {
         StatsHandler statsHandler = other.GetComponent<StatsHandler>();

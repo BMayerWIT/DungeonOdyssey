@@ -18,5 +18,7 @@ public class Skill : ScriptableObject
     public bool isUnlocked;
     public int Cost;
     public bool isUnlockable;
+    public float skillDuration;
+    public float skillCooldown;
 
 }

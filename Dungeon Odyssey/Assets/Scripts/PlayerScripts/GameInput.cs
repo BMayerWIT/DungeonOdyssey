@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameInput : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameInput : MonoBehaviour
     private GameObject playerObject;
     private PlayerAttackHandler playerAttackHandler;
     public static GameInput inputInstance;
+    string currentSceneName;
 
     private PlayerInput _inputActions;
     private InputAction _movement;
@@ -16,10 +18,7 @@ public class GameInput : MonoBehaviour
     private InputAction _jump;
     private InputAction _crouch;
     private InputAction _lightAttack;
-    private InputAction _heavyAttack;
     private InputAction _interact;
-    private InputAction _dash;
-    private InputAction _toggleCamera;
     private InputAction _decreaseHealth;
     private InputAction _pause;
     private InputAction _sprint;
@@ -29,6 +28,7 @@ public class GameInput : MonoBehaviour
     private InputAction _skill2;
     private InputAction _skill3;
 
+
     Vector2 inputVector;
     float mouseX;
     float mouseY;
@@ -36,23 +36,20 @@ public class GameInput : MonoBehaviour
     bool sprinting;
     bool crouching;
     bool interact;
-    bool toggleCam;
     bool shouldDecreaseHealth;
-    bool dashInput;
     bool pauseState;
     bool skill1;
     bool skill2;
     bool skill3;
     Vector2 mouseVector;
 
-    public bool dashFlag = false;
+
     public bool comboFlag;
     public bool isInteracting;
 
     public bool isLightAttackingRH;
-
     public bool lightattack_Input;
-    public bool heavyattack_Input;
+
 
     private void Awake()
     {
@@ -62,9 +59,13 @@ public class GameInput : MonoBehaviour
         }
 
         _inputActions = GetComponent<PlayerInput>();
-        playerObject = GameObject.Find("Player");
-        playerManager = playerObject.GetComponent<PlayerManager>();
-        playerAttackHandler = playerObject.GetComponent<PlayerAttackHandler>();
+        currentSceneName = SceneManager.GetActiveScene().name;
+        if (currentSceneName != "Menu")
+        {
+            playerObject = GameObject.Find("Player");
+            playerManager = playerObject.GetComponent<PlayerManager>();
+            playerAttackHandler = playerObject.GetComponent<PlayerAttackHandler>();
+        }
 
         SetUpInputActions();
     }
@@ -76,10 +77,7 @@ public class GameInput : MonoBehaviour
         _jump = _inputActions.actions["Jump"];
         _crouch = _inputActions.actions["Crouch"];
         _lightAttack = _inputActions.actions["lightAttack"];
-        _heavyAttack = _inputActions.actions["heavyAttack"];
         _interact = _inputActions.actions["Interact"];
-        _dash = _inputActions.actions["Dash"];
-        _toggleCamera = _inputActions.actions["ToggleCamera"];
         _decreaseHealth = _inputActions.actions["DecreaseHealth"];
         _pause = _inputActions.actions["Pause"];
         _sprint = _inputActions.actions["Sprint"];
@@ -101,9 +99,7 @@ public class GameInput : MonoBehaviour
         sprinting = _sprint.IsPressed();
         crouching = _crouch.IsPressed();
         interact = _interact.WasPressedThisFrame();
-        toggleCam = _toggleCamera.WasPressedThisFrame();
         shouldDecreaseHealth = _decreaseHealth.WasPressedThisFrame();
-        dashInput = _dash.WasPressedThisFrame();
         lightattack_Input = _lightAttack.WasPressedThisFrame();
         skill1 = _skill1.WasPressedThisFrame();
         skill2 = _skill2.WasPressedThisFrame();
@@ -112,12 +108,18 @@ public class GameInput : MonoBehaviour
         
         mouseVector = _mouse.ReadValue<Vector2>();
         pauseState = _pause.WasPressedThisFrame();
-        LightAttack();
+        if (currentSceneName != "Menu")
+        {
+            LightAttack();
+        }
+       
         
+
     }
     public void TickInput(float delta)
     {
         //HandleAttackInput(delta);
+        
     }
     public Vector2 GetMovementVectorNormalized()
     {
@@ -156,11 +158,6 @@ public class GameInput : MonoBehaviour
         return interact;
     }
 
-    public bool GetToggleCamera()
-    {
-        return toggleCam;
-    }
-
     public bool DecreaseHealth()
     {
         return shouldDecreaseHealth;
@@ -175,16 +172,6 @@ public class GameInput : MonoBehaviour
     public bool ReturnPauseState()
     {
         return pauseState;
-    }
-
-    public bool HandleDashInput()
-    {
-        if (dashInput)
-            dashFlag = true;
-        else
-            dashFlag = false;
-
-        return dashInput;
     }
 
     public void LightAttack()
@@ -224,4 +211,31 @@ public class GameInput : MonoBehaviour
         return skill2;
     }
 
+    public bool SkillInput3()
+    {
+        return skill3;
+    }
+
+    public string ReturnSkillBindingStrings(int slotNumber)
+    {
+        string binding = "";
+        if (slotNumber == 1)
+        {
+            binding = _skill1.GetBindingDisplayString();
+        }
+        else if (slotNumber == 2)
+        {
+            binding = _skill2.GetBindingDisplayString();
+        }
+        else if (slotNumber == 3)
+        {
+            binding = _skill3.GetBindingDisplayString();
+        }
+        else
+        {
+            binding = "";
+        }
+
+        return binding;
+    }
 }

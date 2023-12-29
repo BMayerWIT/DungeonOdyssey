@@ -8,5 +8,5 @@ public class MovementSkill : Skill
     [Header("Skill Type: Movement")]
 
     [Header("Skill Attributes")]
-    public string abilityName;
+    public bool isDash;
 }

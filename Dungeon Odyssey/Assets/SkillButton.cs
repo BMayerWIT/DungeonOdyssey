@@ -13,7 +13,9 @@ public class SkillButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     public Image icon;
     private ColorBlock colours;
     private Button button;
-    public Image bar;
+    public GameObject bar;
+    public GameObject barGlow;
+
     public bool hasBar;
     public bool isUnlockable;
     public List<Skill> requiredSkills = new List<Skill>();
@@ -79,8 +81,8 @@ public class SkillButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             if (hasBar)
             {
-                Color color = new Color(0f, 0.89f, 1f, 0.5f); 
-                bar.color = color;
+                bar.SetActive(false);
+                barGlow.SetActive(true);
             }
             
             colours.normalColor = Color.white;
@@ -89,8 +91,8 @@ public class SkillButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             if (hasBar)
             {
-                Color color = new Color(1f, 1f, 1f, 0.5f);
-                bar.color = color;
+                barGlow.SetActive(false);
+                bar.SetActive(true);
             }
             
             colours.normalColor = Color.gray;
@@ -98,6 +100,9 @@ public class SkillButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
         button.colors = colours;
     }
+
+   
+    
 
     private void CheckIfUnlockable()
     {

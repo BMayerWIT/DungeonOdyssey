@@ -20,8 +20,7 @@ public class Ability : Skill
     public float walkSpeedMultiplier;
     public int accelerationIncrease;
     public int staminaRegainSpeed;
-    public int skillDuration;
-    public int skillCooldown;
+    
 
 
 

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.ParticleSystemJobs;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class PlayerLocomotion : MonoBehaviour
 {
@@ -38,6 +40,7 @@ public class PlayerLocomotion : MonoBehaviour
     public float acceleration = 5.0f; // Acceleration rate
     public float deceleration = 5.0f; // Deceleration 
     public float currentSpeed = 0.0f; // Current character speed
+    private float speedBeforeDash;
     public float currentStamina;
 
     public float dashSpeed = 0.1f;
@@ -54,10 +57,12 @@ public class PlayerLocomotion : MonoBehaviour
     public bool isSprinting;
     [SerializeField] private CharacterController characterController;
     public GameObject speedLines;
+    private ParticleSystem speedLinesParticles;
 
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
+        speedLinesParticles = speedLines.GetComponent<ParticleSystem>();
        
     }
 
@@ -70,16 +75,14 @@ public class PlayerLocomotion : MonoBehaviour
 
         // Handle Movement mechanics and Ground checks
         GroundChecking();
+        SpeedChecker();
         if (GameInput.inputInstance.Jumped() && isPlayerGrounded)
             Jump();
         //Crouch();
         IsWalking();
         HandleSprinting();
         MovePlayer();
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            StartCoroutine(Dash());
-        }
+        
 
             
     }
@@ -193,16 +196,53 @@ public class PlayerLocomotion : MonoBehaviour
         }
     }
 
-    public IEnumerator Dash()
+    private IEnumerator Dash()
     {
-        print("dashing");
-        speedLines.SetActive(true);
+
+        speedBeforeDash = currentSpeed;
         for (int i = 0; i < dashDistance; i++)
         {
-            yield return new WaitForSeconds(dashSpeed);
-            characterController.Move(moveDirection * i * Time.deltaTime);
+            yield return new WaitForSeconds(dashSpeed * Time.deltaTime);
+            currentSpeed = 15f;
         }
-        speedLines.SetActive(false);
+        currentSpeed = speedBeforeDash;
+    }
+
+    public void StartDash()
+    {
+        StartCoroutine(Dash());
+    }
+
+    private void SpeedChecker()
+    {
+        if (currentSpeed > 7f && currentSpeed < 14f)
+        {
+            speedLines.SetActive(true);
+            SetEmissionRateOverTime(20);
+            
+        }
+        else if (currentSpeed > 14f)
+        {
+            speedLines.SetActive(true);
+            SetEmissionRateOverTime(125);
+        }
+        else
+        {
+            speedLines.SetActive(false);
+        }
+        
+        
+        
+        
+    }
+
+    void SetEmissionRateOverTime(int emissionAmount)
+    {
+        // Access the main module of the Particle System
+        var emissionModule = speedLinesParticles.emission;
+
+        // Set the emission rate over time
+        emissionModule.rateOverTime = emissionAmount;
     }
 
     public void DefaultMovementStats()

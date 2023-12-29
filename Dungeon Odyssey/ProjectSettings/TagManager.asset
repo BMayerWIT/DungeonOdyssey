@@ -8,6 +8,7 @@ TagManager:
   - Hittable
   - Enemy
   - EquipButton
+  - Tile
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - PostProcessing
   - 
   - Player
   - Enemy
@@ -28,7 +29,7 @@ TagManager:
   - Arms
   - Character
   - Tile
-  - 
+  - Door
   - 
   - 
   - 

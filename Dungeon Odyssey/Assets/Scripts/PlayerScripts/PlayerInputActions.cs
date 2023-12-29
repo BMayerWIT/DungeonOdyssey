@@ -100,15 +100,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ToggleCamera"",
-                    ""type"": ""Button"",
-                    ""id"": ""7585e6d4-c367-4e46-8e6e-f48302a24b08"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""DecreaseHealth"",
                     ""type"": ""Button"",
                     ""id"": ""f1a21864-7036-4900-84e4-74501f9f04c7"",
@@ -125,24 +116,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""a8dd1c8a-ce7e-48a6-a1f1-1e1386040226"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""HeavyAttack"",
-                    ""type"": ""Button"",
-                    ""id"": ""c1ebc928-25df-45d7-a994-b2eda1982690"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Pause"",
@@ -389,17 +362,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""400eec5d-f9ce-4df0-94ec-4a97ecac91a7"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleCamera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9f991ffd-fd0a-49f5-b1c6-1e0a9bfd3fec"",
                     ""path"": ""<Keyboard>/h"",
                     ""interactions"": """",
@@ -417,28 +379,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": ""NormalizeVector2"",
                     ""groups"": """",
                     ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8128f782-1c97-4f96-9bc3-8707701e5e04"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f34faf35-cdbc-4eb9-ad5e-11e38690dc7d"",
-                    ""path"": ""<Keyboard>/equals"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""HeavyAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -523,11 +463,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_ToggleCamera = m_Player.FindAction("ToggleCamera", throwIfNotFound: true);
         m_Player_DecreaseHealth = m_Player.FindAction("DecreaseHealth", throwIfNotFound: true);
         m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
-        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_BlockParry = m_Player.FindAction("Block/Parry", throwIfNotFound: true);
         m_Player_UseSkill1 = m_Player.FindAction("UseSkill1", throwIfNotFound: true);
@@ -601,11 +538,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_LightAttack;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_ToggleCamera;
     private readonly InputAction m_Player_DecreaseHealth;
     private readonly InputAction m_Player_Camera;
-    private readonly InputAction m_Player_Dash;
-    private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_BlockParry;
     private readonly InputAction m_Player_UseSkill1;
@@ -624,11 +558,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @ToggleCamera => m_Wrapper.m_Player_ToggleCamera;
         public InputAction @DecreaseHealth => m_Wrapper.m_Player_DecreaseHealth;
         public InputAction @Camera => m_Wrapper.m_Player_Camera;
-        public InputAction @Dash => m_Wrapper.m_Player_Dash;
-        public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @BlockParry => m_Wrapper.m_Player_BlockParry;
         public InputAction @UseSkill1 => m_Wrapper.m_Player_UseSkill1;
@@ -668,21 +599,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @ToggleCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleCamera;
-                @ToggleCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleCamera;
-                @ToggleCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleCamera;
                 @DecreaseHealth.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDecreaseHealth;
                 @DecreaseHealth.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDecreaseHealth;
                 @DecreaseHealth.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDecreaseHealth;
                 @Camera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
                 @Camera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
                 @Camera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
-                @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
-                @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
-                @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
-                @HeavyAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
-                @HeavyAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
-                @HeavyAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
@@ -729,21 +651,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @ToggleCamera.started += instance.OnToggleCamera;
-                @ToggleCamera.performed += instance.OnToggleCamera;
-                @ToggleCamera.canceled += instance.OnToggleCamera;
                 @DecreaseHealth.started += instance.OnDecreaseHealth;
                 @DecreaseHealth.performed += instance.OnDecreaseHealth;
                 @DecreaseHealth.canceled += instance.OnDecreaseHealth;
                 @Camera.started += instance.OnCamera;
                 @Camera.performed += instance.OnCamera;
                 @Camera.canceled += instance.OnCamera;
-                @Dash.started += instance.OnDash;
-                @Dash.performed += instance.OnDash;
-                @Dash.canceled += instance.OnDash;
-                @HeavyAttack.started += instance.OnHeavyAttack;
-                @HeavyAttack.performed += instance.OnHeavyAttack;
-                @HeavyAttack.canceled += instance.OnHeavyAttack;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -776,11 +689,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnToggleCamera(InputAction.CallbackContext context);
         void OnDecreaseHealth(InputAction.CallbackContext context);
         void OnCamera(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
-        void OnHeavyAttack(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnBlockParry(InputAction.CallbackContext context);
         void OnUseSkill1(InputAction.CallbackContext context);

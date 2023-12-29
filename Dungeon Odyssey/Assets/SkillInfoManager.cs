@@ -9,14 +9,14 @@ public class SkillInfoManager : MonoBehaviour
 {
     public static SkillInfoManager instance;
 
-    
-
+    [Header("Current Selected Skill")]
     public Skill currentSkill;
-    public Skill currentSkillToBeEquipped;
-    public bool currentSkillIsUnlockable;
-    public Ability currentAbility;
     public Image currentSkillImage;
     public Image outline;
+    public Skill currentSkillToBeEquipped;
+    public bool currentSkillIsUnlockable;
+
+    [Header("Skill Information")]
     public GameObject equipButton;
     public TextMeshProUGUI skillName;
     public TextMeshProUGUI descriptionText;
@@ -24,16 +24,21 @@ public class SkillInfoManager : MonoBehaviour
     public TextMeshProUGUI cooldownText;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI buttonText;
+
+    [Header("UI Elements")]
     public GameObject[] EquippingUI;
     public GameObject movementSkillTreeUI;
+
+    [Header("Skill Slots")]
     public Image Slot1Image;
     public Image Slot2Image;
     public Image Slot3Image;
+
     private Skill slot1Skill;
     private Skill slot2Skill;
     private Skill slot3Skill;
-    public Skill[] loadedSkills;
-    public bool equippingSkillFlag;
+    private Skill[] loadedSkills;
+    private bool equippingSkillFlag;
 
     private void Awake()
     {
@@ -53,11 +58,11 @@ public class SkillInfoManager : MonoBehaviour
         HandleSkillEquipUI(equippingSkillFlag);
         if (currentSkill != null)
         {
-            if (currentSkill is Ability)
+            if (currentSkill is Skill)
             {
-                currentAbility = (Ability)currentSkill;
+                
                 EnableUI();
-                LoadSkillInfo(currentAbility.skillName, currentAbility.description, currentAbility.skillDuration, currentAbility.skillCooldown, currentAbility.skillIcon, currentAbility.Cost);
+                LoadSkillInfo(currentSkill.skillName, currentSkill.description, currentSkill.skillDuration, currentSkill.skillCooldown, currentSkill.skillIcon, currentSkill.Cost);
             }
         }
         else
@@ -66,13 +71,13 @@ public class SkillInfoManager : MonoBehaviour
         }
     }
 
-    private void LoadSkillInfo(string name, string description, int duration, int cooldown, Sprite icon, int cost)
+    private void LoadSkillInfo(string name, string description, float duration, float cooldown, Sprite icon, int cost)
     {
         
         skillName.text = name;
         descriptionText.text = description;
-        durationText.text = "Duration: " + duration.ToString();
-        cooldownText.text = "Cooldown: " + cooldown.ToString();
+        durationText.text = "Duration: " + duration.ToString() + "s";
+        cooldownText.text = "Cooldown: " + cooldown.ToString() + "s";
         costText.text = "Cost: " + cost.ToString();
         currentSkillImage.sprite = icon;
         buttonText.text = LoadEquipButtonText();
@@ -87,7 +92,7 @@ public class SkillInfoManager : MonoBehaviour
         durationText.enabled = true;
         cooldownText.enabled = true;
         currentSkillImage.enabled = true;
-        if (!currentAbility.isUnlocked)
+        if (!currentSkill.isUnlocked)
         {
             costText.enabled = true;
         }
@@ -118,11 +123,13 @@ public class SkillInfoManager : MonoBehaviour
         {
 
             AudioManager.Instance.equipFlag = true;
+            currentSkillToBeEquipped = currentSkill;
             equippingSkillFlag = true;
         }
         else
         {
             AudioManager.Instance.equipFlag = false;
+            currentSkillToBeEquipped = null;
             equippingSkillFlag = false;
         }
 
@@ -147,7 +154,7 @@ public class SkillInfoManager : MonoBehaviour
     private string LoadEquipButtonText()
     {
         string text;
-        if (currentAbility.isUnlocked)
+        if (currentSkill.isUnlocked)
         {
             text = "Equip";
         }

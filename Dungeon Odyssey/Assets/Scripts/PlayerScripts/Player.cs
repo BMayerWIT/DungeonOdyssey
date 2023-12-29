@@ -43,38 +43,6 @@ public class Player : MonoBehaviour
         
     }
 
-    private void Update()
-    {
-        float delta = Time.deltaTime;
-        GameInput.inputInstance.TickInput(delta);
-
-        HandleDash();
-        
-        
-
-        
-    }
-
-    
-
-   
-
-    public void HandleDash()
-    {
-        //if (playerAnimator.GetBool("isInteracting"))
-        //{ return; }
-
-
-        if (!GameInput.inputInstance.dashFlag && GameInput.inputInstance.HandleDashInput())
-        {
-            Debug.Log("Animation should play");
-            
-            //playerAnimationHandler.PlayTargetAnimation("DashBack", true);
-        }
-        
-    }
-
-  
 
     public RaycastHit InteractableCheck()
     {

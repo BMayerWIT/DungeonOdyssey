@@ -12,4 +12,10 @@ public class SaveAndLoad : MonoBehaviour
     }
 
     public SkillDatabase skillSlotData;
+    public Skill[] LoadedSkills;
+
+    private void Start()
+    {
+        LoadedSkills = skillSlotData.savedSkills;
+    }
 }
