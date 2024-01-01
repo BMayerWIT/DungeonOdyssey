@@ -17,18 +17,19 @@ MonoBehaviour:
   movement: 1
   combat: 0
   passive: 0
-  description: Increases player walk and sprint speed significantly
+  description: Increases player walk speed significantly
   isUnlocked: 1
   Cost: 1
   isUnlockable: 1
-  skillDuration: 5
-  skillCooldown: 2
+  skillDuration: 10
+  skillCooldown: 5
   sprintSpeedBaseIncrease: 0
   walkSpeedBaseIncrease: 0
-  sprintSpeedMultiplier: 1.5
+  sprintSpeedMultiplier: 1
   walkSpeedMultiplier: 1.5
   accelerationIncrease: 0
-  staminaRegainSpeed: 0
+  staminaRegainSpeed: 2
+  staminaDrainSpeed: 2
   damageBaseIncrease: 0
   damageMultiplier: 0
   criticalHitPercent: 0

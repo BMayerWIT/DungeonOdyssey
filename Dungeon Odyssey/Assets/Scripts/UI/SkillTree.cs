@@ -9,6 +9,6 @@ public class SkillTree : MonoBehaviour
     public TextMeshProUGUI skillPointText;
     private void Update()
     {
-        skillPointText.text = "Skill Points: " + SkillManager.instance.skillPoints.ToString();
+        skillPointText.text = "Skill Points: " + StatsHandler.Instance.skillPoints.ToString();
     }
 }

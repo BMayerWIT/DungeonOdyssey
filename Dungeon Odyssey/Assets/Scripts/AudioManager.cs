@@ -24,30 +24,25 @@ public class AudioManager : MonoBehaviour
     public float masterVolume = 1.0f;  // Default volume for button click
     public float SFXVolume = 1.0f;    // Default volume for equip skill
     public float musicVolume = 0.5f; // Default volume for main menu music
+    public float inGameMultiplier = 1.0f;
 
 
     private void Start()
+    {
+        
+        
+       
+    }
+    private void Awake()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         masterAudioSource = camera.GetComponent<AudioSource>();
         musicAudioSource = GetComponent<AudioSource>();
         currentSceneName = SceneManager.GetActiveScene().name;
-        if (currentSceneName.Equals("Menu"))
-        {
-        
-        }
-       
-    }
-    private void Awake()
-    {
+
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
         }
         
     }
@@ -61,7 +56,7 @@ public class AudioManager : MonoBehaviour
     {
         masterVolume = PlayerPrefs.GetFloat("masterVolume");
         SFXVolume = PlayerPrefs.GetFloat("SFXVolume") * masterVolume;
-        musicVolume = PlayerPrefs.GetFloat("musicVolume") * masterVolume;
+        musicVolume = PlayerPrefs.GetFloat("musicVolume") * masterVolume * inGameMultiplier;
         musicAudioSource.volume = musicVolume;
     }
 
@@ -87,9 +82,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMainMenuMusic()
     {
-        musicAudioSource.clip = mainMenuMusic;
-        musicAudioSource.volume = musicVolume;
-        musicAudioSource.Play();
+        if (musicAudioSource != null)
+        {
+            musicAudioSource.clip = mainMenuMusic;
+            musicAudioSource.volume = musicVolume;
+            musicAudioSource.Play();
+        }
+        
     }
 
     public void PlayRandomShopWelcome()

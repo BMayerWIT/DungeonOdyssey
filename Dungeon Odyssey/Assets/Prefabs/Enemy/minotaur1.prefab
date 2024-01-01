@@ -4214,6 +4214,8 @@ MonoBehaviour:
   bodyMat: {fileID: 2100000, guid: a2238eb2c38a0b64ba0a8c39d107cc49, type: 2}
   dissolveSpeed: 0.005
   gotHit: 0
+  xpWorth: 10
+  goldWorth: 5
 --- !u!114 &412168048139996770
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -46,6 +46,7 @@ public class DamageCollider : MonoBehaviour
 
             if (enemyStats != null)
             {
+                StatsHandler.Instance.totalDamage += currentWeaponDamage;
                 enemyStats.TakeDamage(currentWeaponDamage);
             }
         }

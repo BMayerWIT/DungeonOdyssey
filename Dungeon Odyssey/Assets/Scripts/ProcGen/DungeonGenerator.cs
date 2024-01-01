@@ -18,6 +18,8 @@ public class DungeonGenerator : MonoBehaviour
     public GameObject[] blockedPrefabs;
     public GameObject[] doorPrefabs;
     public GameObject[] exitPrefabs;
+    public GameObject enemyPrefab;
+    public GameObject potionPrefab;
 
     [Header("Debugging Options")]
     public bool useBoxColliders;
@@ -33,6 +35,8 @@ public class DungeonGenerator : MonoBehaviour
     [Range(0, 50)] public int branchLength = 5;
     [Range(0, 25)] public int numberOfBranches = 10;
     [Range(0, 100)] public int doorSpawnPercent = 25;
+    [Range(0, 100)] public int enemySpawnPercent = 25;
+    [Range(0, 100)] public int potionSpawnPercent = 25;
     [Range(0,1)] public float constructionDelay;
 
     [Header("Available At Runtime")]
@@ -144,10 +148,52 @@ public class DungeonGenerator : MonoBehaviour
         CleanUpBoxes();
         BlockedPassages();
         SpawnDoors();
+        SpawnEnemies();
+        SpawnPotions();
         dungeonState = DungeonState.completed;
         yield return null;
+
+        AudioManager.Instance.inGameMultiplier /= 0.5f;
+        AudioManager.Instance.PlayMainMenuMusic();
+        
+
         goCamera.SetActive(false);
         goPlayer.SetActive(true);
+    }
+
+    private void SpawnEnemies()
+    {
+        if (enemySpawnPercent > 0)
+        {
+            GameObject[] enemySpawners = GameObject.FindGameObjectsWithTag("EnemySpawner");
+            foreach (GameObject spawner in enemySpawners)
+            {
+                int roll = Random.Range(1, 101);
+                if (roll <= enemySpawnPercent)
+                {
+                    GameObject.Instantiate(enemyPrefab, spawner.transform.position, Quaternion.identity);
+                }
+
+                
+            }
+        }
+    }
+    private void SpawnPotions()
+    {
+        if (enemySpawnPercent > 0)
+        {
+            GameObject[] potionSpawners = GameObject.FindGameObjectsWithTag("PotionSpawner");
+            foreach (GameObject spawner in potionSpawners)
+            {
+                int roll = Random.Range(1, 101);
+                if (roll <= potionSpawnPercent)
+                {
+                    GameObject.Instantiate(potionPrefab, spawner.transform.position, Quaternion.identity);
+                }
+
+                
+            }
+        }
     }
 
     private void SpawnDoors()
@@ -196,6 +242,7 @@ public class DungeonGenerator : MonoBehaviour
 
     private void CollisionCheck()
     {
+        
         BoxCollider box = tileTo.GetComponent<BoxCollider>();
         Vector3 offset = (tileTo.right * box.center.x) + (tileTo.up * box.center.y) + (tileTo.forward * box.center.z);  
         Vector3 halfExtents = box.bounds.extents;
@@ -324,12 +371,19 @@ public class DungeonGenerator : MonoBehaviour
             
             foreach (Tile tile in generatedTiles)
             {
+               //if (tile.tile.name == "Exit Room")
+               // {
+               //     return;
+               // }
                
-                BoxCollider box = tile.tile.GetComponent<BoxCollider>();
-                if (box != null)
-                {
-                    Destroy(box);
-                }
+                
+                    BoxCollider box = tile.tile.GetComponent<BoxCollider>();
+                    if (box != null)
+                    {
+                        Destroy(box);
+                    }
+                
+                
             }
         }
     }

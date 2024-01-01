@@ -51,18 +51,18 @@ public class EnemyStats : MonoBehaviour
     }
     private void Start()
     {
-        
+        healthLevel = 25 * PlayerPrefs.GetInt("Difficulty");
         if (StatsHandler.Instance.currentPlayerLevel < 5)
         {
-            healthLevel = 5 * PlayerPrefs.GetInt("Difficulty");
+            healthLevel += 25;
         }
         else if (StatsHandler.Instance.currentPlayerLevel > 5 && StatsHandler.Instance.currentPlayerLevel < 7)
         {
-            healthLevel = 10 * PlayerPrefs.GetInt("Difficulty");
+            healthLevel += 50;
         }
         else if (StatsHandler.Instance.currentPlayerLevel >= 7)
         {
-            healthLevel = 15 * PlayerPrefs.GetInt("Difficulty");
+            healthLevel += 75;
         }
         
         SetMaxHealthFromHealthLevel();
@@ -81,7 +81,7 @@ public class EnemyStats : MonoBehaviour
 
     private int SetMaxHealthFromHealthLevel()
     {
-        maxHealth = healthLevel * 10;
+        maxHealth = healthLevel;
         return maxHealth;
     }
 
@@ -95,6 +95,7 @@ public class EnemyStats : MonoBehaviour
         {
             currentHealth = 0;
             StatsHandler.Instance.XPAdder(xpWorth);
+            StatsHandler.Instance.enemiesKilled += 1;
             Destroy(gameObject);
         }
         

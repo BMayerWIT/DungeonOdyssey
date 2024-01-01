@@ -50,7 +50,9 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         HUD.SetActive(true);
-        
+        AudioManager.Instance.PlayUnlockSkillSound();
+
+
     }
 
     void Pause()
@@ -61,6 +63,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         HUD.SetActive(false);
+        AudioManager.Instance.PlayUnlockSkillSound();
         
         
     }
@@ -80,11 +83,14 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        PlayerPrefs.SetInt("LoadIntro", 0);
         SceneManager.LoadScene("Menu");
+        
 
     }
     public void QuitGame()
     {
+        PlayerPrefs.SetInt("LoadIntro", 1);
         Application.Quit();
     }
 

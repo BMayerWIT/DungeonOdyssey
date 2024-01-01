@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb43a105e8d3cc049a56aec20b432ee7, type: 3}
+  m_Name: Infinite Stamina
+  m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: ae760a1155fbc8b41a5ad66ed36d24a7, type: 3}
+  skillName: Infinite Stamina
+  movement: 1
+  combat: 0
+  passive: 0
+  description: Gives infinited stamina for a short duration
+  isUnlocked: 0
+  Cost: 3
+  isUnlockable: 1
+  skillDuration: 10
+  skillCooldown: 20
+  sprintSpeedBaseIncrease: 0
+  walkSpeedBaseIncrease: 0
+  sprintSpeedMultiplier: 1
+  walkSpeedMultiplier: 1
+  accelerationIncrease: 0
+  staminaRegainSpeed: 2
+  staminaDrainSpeed: 0.00000001
+  damageBaseIncrease: 0
+  damageMultiplier: 0
+  criticalHitPercent: 0

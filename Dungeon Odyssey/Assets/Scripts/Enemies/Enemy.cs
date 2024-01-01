@@ -54,15 +54,20 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         stats = GetComponent<EnemyStats>();
-        player = GameObject.Find("Player");
+        
 
     }
 
     private void Update()
     {
+        player = GameObject.Find("Player");
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         timeSincePlayerSeen += Time.deltaTime;
-        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        if (player != null)
+        {
+            distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        }
+        
         HitReset();
         HandleEnemyFOV();
         HandleAnimatorBools();
@@ -78,14 +83,22 @@ public class Enemy : MonoBehaviour
 
     private void HandleEnemyFOV()
     {
-        direction = (player.transform.position - transform.position).normalized;
+        if (player != null)
+        {
+            direction = (player.transform.position - transform.position).normalized;
+        }
+        
         Debug.DrawRay(transform.position, direction * 100, Color.green);
         Debug.DrawRay(transform.forward, direction * 100, Color.blue);
         Debug.DrawRay(transform.position, Quaternion.AngleAxis(-60, Vector3.up) * transform.forward * 100, Color.magenta);
         Debug.DrawRay(transform.position, Quaternion.AngleAxis(+60, Vector3.up) * transform.forward * 100, Color.magenta);
         isInFOV = (Vector3.Dot(transform.forward.normalized, direction) > Mathf.Cos(Mathf.PI / 3));
-        isInViewDistance = Vector3.Distance(transform.position, player.transform.position) < viewDistance;
-        currentDistanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        if (player != null)
+        {
+            isInViewDistance = Vector3.Distance(transform.position, player.transform.position) < viewDistance;
+            currentDistanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        }
+        
        
     }
 
@@ -146,7 +159,11 @@ public class Enemy : MonoBehaviour
     {
         if (currentDistanceToPlayer < attackRange)
         {
-            transform.forward = player.transform.position;
+            if (player != null)
+            {
+                transform.forward = player.transform.position;
+            }
+            
             canAttack = true;
             damageCollider.EnableDamageCollider();
             //int randomIndex = Random.Range(0, attackAnimations.Count());
@@ -168,7 +185,11 @@ public class Enemy : MonoBehaviour
         {
             agent.isStopped = false;
             moveToPlayer = true;
-            agent.SetDestination(player.transform.position);
+            if (player != null)
+            {
+                agent.SetDestination(player.transform.position);
+            }
+            
         }
         else
         {

@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb43a105e8d3cc049a56aec20b432ee7, type: 3}
-  m_Name: test
+  m_Name: Swift Sprint
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: 43f51e974e8fb99449f9a8dc94d8be9e, type: 3}
-  skillName: test
+  skillName: Swift Sprint
   movement: 1
   combat: 0
   passive: 0
-  description: dawdawdawd
+  description: Increases sprint speed significantly
   isUnlocked: 1
   Cost: 2
   isUnlockable: 1
-  skillDuration: 0
-  skillCooldown: 0
+  skillDuration: 10
+  skillCooldown: 5
   sprintSpeedBaseIncrease: 0
   walkSpeedBaseIncrease: 0
-  sprintSpeedMultiplier: 0
-  walkSpeedMultiplier: 0
+  sprintSpeedMultiplier: 1.5
+  walkSpeedMultiplier: 1
   accelerationIncrease: 0
-  staminaRegainSpeed: 0
+  staminaRegainSpeed: 2
+  staminaDrainSpeed: 2
   damageBaseIncrease: 0
   damageMultiplier: 0
   criticalHitPercent: 0

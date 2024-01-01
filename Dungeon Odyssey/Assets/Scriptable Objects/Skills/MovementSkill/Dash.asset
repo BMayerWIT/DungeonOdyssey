@@ -18,7 +18,7 @@ MonoBehaviour:
   combat: 0
   passive: 0
   description: Quick dash allowing for evasive movement
-  isUnlocked: 1
+  isUnlocked: 0
   Cost: 4
   isUnlockable: 1
   skillDuration: 0.3

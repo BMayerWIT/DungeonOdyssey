@@ -135,11 +135,11 @@ public class SkillInfoManager : MonoBehaviour
 
         if (currentSkill.isUnlockable && !currentSkill.isUnlocked)
         {
-            if (SkillManager.instance.skillPoints >= currentSkill.Cost)
+            if (StatsHandler.Instance.skillPoints >= currentSkill.Cost)
             {
                 currentSkill.isUnlocked = true;
                 costText.enabled = false;
-                SkillManager.instance.DeductSkillPoints(currentSkill.Cost);
+                StatsHandler.Instance.skillPoints -= currentSkill.Cost;
                 AudioManager.Instance.PlayUnlockSkillSound();
             }
         }

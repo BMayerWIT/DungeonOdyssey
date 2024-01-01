@@ -31,12 +31,13 @@ public class EnemyDamageCollider : MonoBehaviour
         Debug.Log(collision);
         if (collision.tag == "Player")
         {
-            
+
             print("hit player");
-            
-            
-                StatsHandler.Instance.TakeDamage(currentWeaponDamage);
-            
+
+
+            StatsHandler.Instance.TakeDamage(currentWeaponDamage);
+            StatsHandler.Instance.damageTaken += currentWeaponDamage;
+
         }
 
     }

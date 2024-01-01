@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Runtime.CompilerServices;
 
 public class SkillManager : MonoBehaviour
 {
     string currentSceneName;
-    public int skillPoints = 5;
+    
     public static SkillManager instance;
     private GameObject player;
     private PlayerLocomotion movementStats;
@@ -30,9 +31,13 @@ public class SkillManager : MonoBehaviour
     public bool cooldown2;
     public bool cooldown3;
 
-    private float skill1LastActivatedTime = -20;
-    private float skill2LastActivatedTime = -20;
-    private float skill3LastActivatedTime = -20;
+    [Header("Available At Runtime")]
+    [SerializeField] private float skill1LastActivatedTime = -300;
+    [SerializeField] private float skill2LastActivatedTime = -300;
+    [SerializeField] private float skill3LastActivatedTime = -300;
+    [SerializeField] private bool canUseSkill1;
+    [SerializeField] private bool canUseSkill2;
+    [SerializeField] private bool canUseSkill3;
 
     
     public Ability abilitySlot1;
@@ -67,6 +72,7 @@ public class SkillManager : MonoBehaviour
 
             player = GameObject.FindGameObjectWithTag("Player");
             movementStats = player.GetComponent<PlayerLocomotion>();
+            
         }
         
         
@@ -100,6 +106,7 @@ public class SkillManager : MonoBehaviour
             // Check if enough time has passed since the last activation
             if (Time.time - skill1LastActivatedTime >= selectedSkills[0].skillCooldown)
             {
+                canUseSkill1 = true;
                 // Check if the skill input is pressed and the skill is not already activated
                 if (GameInput.inputInstance.SkillInput1() && !skill1Activated)
                 {
@@ -108,7 +115,7 @@ public class SkillManager : MonoBehaviour
                     skill1LastActivatedTime = Time.time;
                     if (abilitySlot1 != null)
                     {
-                        HandleMovementAbility(abilitySlot1);
+                        HandleMovementAbility1(abilitySlot1);
                     }
                     else if (movementSkillSlot1 != null)
                     {
@@ -117,6 +124,10 @@ public class SkillManager : MonoBehaviour
                     }
                     StartCoroutine(DeactivateSkillAfterDuration1(selectedSkills[0]));
                 }
+            }
+            else
+            {
+                canUseSkill1 = false;
             }
         }   
     }
@@ -187,6 +198,7 @@ public class SkillManager : MonoBehaviour
             // Check if enough time has passed since the last activation
             if (Time.time - skill2LastActivatedTime >= selectedSkills[1].skillCooldown)
             {
+                canUseSkill2 = true;
                 // Check if the skill input is pressed and the skill is not already activated
                 if (GameInput.inputInstance.SkillInput2() && !skill2Activated)
                 {
@@ -195,7 +207,7 @@ public class SkillManager : MonoBehaviour
                     skill2LastActivatedTime = Time.time;
                     if (abilitySlot2 != null)
                     {
-                        HandleMovementAbility(abilitySlot2);
+                        HandleMovementAbility2(abilitySlot2);
                     }
                     else if (movementSkillSlot2 != null)
                     {
@@ -204,6 +216,10 @@ public class SkillManager : MonoBehaviour
                     }
                     StartCoroutine(DeactivateSkillAfterDuration2(selectedSkills[1]));
                 }
+            }
+            else
+            {
+                canUseSkill2 = false;
             }
         }
     }
@@ -273,6 +289,7 @@ public class SkillManager : MonoBehaviour
             // Check if enough time has passed since the last activation
             if (Time.time - skill1LastActivatedTime >= selectedSkills[2].skillCooldown)
             {
+                canUseSkill3 = true;
                 // Check if the skill input is pressed and the skill is not already activated
                 if (GameInput.inputInstance.SkillInput3() && !skill3Activated)
                 {
@@ -281,7 +298,7 @@ public class SkillManager : MonoBehaviour
                     skill3LastActivatedTime = Time.time;
                     if (abilitySlot3 != null)
                     {
-                        HandleMovementAbility(abilitySlot3);
+                        HandleMovementAbility3(abilitySlot3);
                     }
                     else if (movementSkillSlot3 != null)
                     {
@@ -290,6 +307,10 @@ public class SkillManager : MonoBehaviour
                     }
                     StartCoroutine(DeactivateSkillAfterDuration3(selectedSkills[2]));
                 }
+            }
+            else
+            {
+                canUseSkill3 = false;
             }
         }
     }
@@ -390,7 +411,7 @@ public class SkillManager : MonoBehaviour
     }
 
 
-private void HandleMovementAbility(Ability skill)
+    private void HandleMovementAbility1(Ability skill)
     {
         
 
@@ -401,6 +422,40 @@ private void HandleMovementAbility(Ability skill)
             movementStats.moveSpeed += skill.walkSpeedBaseIncrease;
             movementStats.moveSpeed *= skill.walkSpeedMultiplier;
             movementStats.sprintSpeed *= skill.sprintSpeedMultiplier;
+            StatsHandler.Instance.staminaDrainRate = skill.staminaDrainSpeed;
+            StatsHandler.Instance.staminaRechargeRate = skill.staminaRegainSpeed;
+        }
+    }
+    
+    private void HandleMovementAbility2(Ability skill)
+    {
+        
+
+        if (skill != null)
+        {
+            // Apply skill effects
+            movementStats.sprintSpeed += skill.sprintSpeedBaseIncrease;
+            movementStats.moveSpeed += skill.walkSpeedBaseIncrease;
+            movementStats.moveSpeed *= skill.walkSpeedMultiplier;
+            movementStats.sprintSpeed *= skill.sprintSpeedMultiplier;
+            StatsHandler.Instance.staminaDrainRate = skill.staminaDrainSpeed;
+            StatsHandler.Instance.staminaRechargeRate = skill.staminaRegainSpeed;
+        }
+    }
+    
+    private void HandleMovementAbility3(Ability skill)
+    {
+        
+
+        if (skill != null)
+        {
+            // Apply skill effects
+            movementStats.sprintSpeed += skill.sprintSpeedBaseIncrease;
+            movementStats.moveSpeed += skill.walkSpeedBaseIncrease;
+            movementStats.moveSpeed *= skill.walkSpeedMultiplier;
+            movementStats.sprintSpeed *= skill.sprintSpeedMultiplier;
+            StatsHandler.Instance.staminaDrainRate = skill.staminaDrainSpeed;
+            StatsHandler.Instance.staminaRechargeRate = skill.staminaRegainSpeed;
         }
     }
 
@@ -411,6 +466,8 @@ private void HandleMovementAbility(Ability skill)
         movementStats.sprintSpeed /= skill.sprintSpeedMultiplier;
         movementStats.moveSpeed -= skill.walkSpeedBaseIncrease;
         movementStats.sprintSpeed -= skill.sprintSpeedBaseIncrease;
+        StatsHandler.Instance.staminaRechargeRate = 2f;
+        StatsHandler.Instance.staminaDrainRate = 2f;
     }
 
     private void HandleDashSkill(MovementSkill skill)
@@ -424,12 +481,14 @@ private void HandleMovementAbility(Ability skill)
      
     public void DeductSkillPoints(int cost)
     {
-        skillPoints -= cost;
+        StatsHandler.Instance.skillPoints -= cost;
     }
 
     private void UpdateBindingText()
     {
         skillBindingText[0].text = GameInput.inputInstance.ReturnSkillBindingStrings(1);
         skillBindingText[1].text = GameInput.inputInstance.ReturnSkillBindingStrings(2);
-        skillBindingText[2].text = GameInput.inputInstance.ReturnSkillBindingStrings(3);    }
+        skillBindingText[2].text = GameInput.inputInstance.ReturnSkillBindingStrings(3);   
+    }
+
 }

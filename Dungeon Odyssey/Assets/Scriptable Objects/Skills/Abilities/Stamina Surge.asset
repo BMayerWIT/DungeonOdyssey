@@ -22,13 +22,14 @@ MonoBehaviour:
   Cost: 1
   isUnlockable: 1
   skillDuration: 30
-  skillCooldown: 60
+  skillCooldown: 30
   sprintSpeedBaseIncrease: 0
   walkSpeedBaseIncrease: 0
-  sprintSpeedMultiplier: 0
-  walkSpeedMultiplier: 0
+  sprintSpeedMultiplier: 1
+  walkSpeedMultiplier: 1
   accelerationIncrease: 0
   staminaRegainSpeed: 5
+  staminaDrainSpeed: 2
   damageBaseIncrease: 0
   damageMultiplier: 0
   criticalHitPercent: 0
